@@ -194,7 +194,7 @@ public class MainActivity extends FragmentActivity {
      
             // Showing Alert Message
             alertDialog.show();
-        	break;
+        	break; //comment
         		  
         }   
    
