@@ -1,0 +1,48 @@
+package app.socialgps.db.dao;
+
+public class user_detail_dao
+{
+	private String user_id, user_name, email_id, status;
+	private Long phone;
+	public void set_user_id(String user_id)
+	{
+		this.user_id=user_id;
+	}
+	public void set_user_name(String name)
+	{
+		this.user_name=name;
+	}
+	public void set_email_id(String eid)
+	{
+		this.email_id=eid;
+	}
+	public void set_status(String s)
+	{
+		this.status=s;
+	}
+	public void set_phone(Long ph)
+	{
+		this.phone= ph;
+	}
+	
+	public String get_user_id()
+	{
+		return this.user_id;
+	}
+	public String get_user_name()
+	{
+		return this.user_name;
+	}
+	public String get_email_id()
+	{
+		return this.email_id;
+	}
+	public String get_status()
+	{
+		return this.status;
+	}
+	public Long get_phone()
+	{
+		return this.phone;
+	}
+}
