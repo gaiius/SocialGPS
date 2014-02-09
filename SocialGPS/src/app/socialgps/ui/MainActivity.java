@@ -16,7 +16,12 @@
 
 package app.socialgps.ui;
 
+import app.socialgps.db.DatabaseHandler;
+import app.socialgps.db.dao.user_pass_dao;
+import app.socialgps.db.dto.user_pass_dto;
 import app.socialgps.ui.R;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +47,9 @@ public class MainActivity extends FragmentActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+	user_pass_dao upd;
+	user_pass_dto upt;
+	DatabaseHandler d;
     private String[] menuItems;
     int newPosition = 0;
     private boolean doubleBackToExitPressedOnce = false;
@@ -55,7 +63,8 @@ public class MainActivity extends FragmentActivity {
         menuItems = getResources().getStringArray(R.array.menu_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+        d = new DatabaseHandler(this);
+		
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
@@ -161,11 +170,32 @@ public class MainActivity extends FragmentActivity {
                  break;
         case 1:
         	Toast.makeText(getApplicationContext(), "Yet to design Friends List", Toast.LENGTH_LONG).show();break;
+        	
         case 2:
         	Toast.makeText(getApplicationContext(), "Yet to design Contacts view", Toast.LENGTH_LONG).show();break;
+        	
         case 3:
-        	Toast.makeText(getApplicationContext(), "Yet to design Logout option", Toast.LENGTH_LONG).show();break;
-     		  
+        	AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Logout");
+            alertDialog.setMessage("Are you sure you want Logout?");
+            alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int which) {
+                	upd= new user_pass_dao();
+                	upd=d.check_record();
+                	   Toast.makeText(getApplicationContext(), upd.get_user_id()+" logged out "+d.delete(upd), Toast.LENGTH_SHORT).show();
+                    finish();
+                 }
+            });
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+     
+            // Showing Alert Message
+            alertDialog.show();
+        	break;
+        		  
         }   
    
     }
