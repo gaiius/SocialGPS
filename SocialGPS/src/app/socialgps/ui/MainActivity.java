@@ -178,7 +178,7 @@ public class MainActivity extends FragmentActivity {
         	AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Logout");
             alertDialog.setMessage("Are you sure you want Logout?");
-            alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int which) {
                 	upd= new user_pass_dao();
                 	upd=d.check_record();
