@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
 				Intent i = new Intent(getApplicationContext(), 	//redirecting to main page
 						MainActivity.class);
 				startActivity(i);
+				finish();
 				Log.d("already there", "forwarding");
 			}
 			else
@@ -74,6 +75,7 @@ public class LoginActivity extends Activity {
 							Intent i = new Intent(getApplicationContext(),
 									MainActivity.class);
 							startActivity(i);
+							finish();
 						} else
 							Toast.makeText(getApplicationContext(),
 									"Incorrect User name password Set",
@@ -83,6 +85,7 @@ public class LoginActivity extends Activity {
 						Intent i = new Intent(getApplicationContext(),
 								MainActivity.class);
 						startActivity(i);
+						finish();
 					}
 
 				}
@@ -94,6 +97,7 @@ public class LoginActivity extends Activity {
 					Intent i = new Intent(getApplicationContext(),
 							Registration.class);
 					startActivity(i);
+					finish();
 				}
 			});
 

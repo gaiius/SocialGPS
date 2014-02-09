@@ -7,6 +7,7 @@ import app.socialgps.ui.R;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -72,6 +73,12 @@ public class Registration extends Activity {
 					d.insert(upd);							//storing in offline db
 					d.insert(udd);
 					Toast.makeText(getApplicationContext(), "User Registered, please continue by login", Toast.LENGTH_LONG).show();
+					
+					//Redirecting to Login Screen
+					Intent i = new Intent(getApplicationContext(),
+							LoginActivity.class);
+					startActivity(i);
+					finish();
 				}
 			}
 			});

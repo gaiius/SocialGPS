@@ -2,11 +2,8 @@ package app.socialgps.ui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -79,9 +76,10 @@ public class MapsFragment extends Fragment {
 
 		LatLng KODAMBAKKAM = new LatLng(13.054814, 80.226757);
 		LatLng CHROMPET = new LatLng(12.945754, 80.131905);
-		Marker kodambakkam = googleMap.addMarker(new MarkerOptions().position(
+		MarkerOptions kodambakkam = new MarkerOptions().position(
 				KODAMBAKKAM).title("Balaji")
-				.snippet("Kodambakkam"));
+				.snippet("Kodambakkam");
+		Marker mo = googleMap.addMarker(kodambakkam);
 		Marker chrompet = googleMap.addMarker(new MarkerOptions()
 				.position(CHROMPET)
 				.title("Dinesh")
@@ -90,7 +88,7 @@ public class MapsFragment extends Fragment {
 		//icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET
 
 		// Move the camera instantly to hamburg with a zoom of 15.
-		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(KODAMBAKKAM, 15));
+		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(KODAMBAKKAM, 15));	
 
 		// Zoom in, animating the camera.
 		googleMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);

@@ -16,10 +16,10 @@
 
 package app.socialgps.ui;
 
-import com.google.android.gms.maps.GoogleMap;
 import app.socialgps.ui.R;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -32,7 +32,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,12 +40,11 @@ public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private GoogleMap googleMap;
-
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] menuItems;
     int newPosition = 0;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +160,11 @@ public class MainActivity extends FragmentActivity {
                  ft.replace(R.id.content_frame, mf).commit();
                  break;
         case 1:
-        	System.out.println("case 1");
+        	Toast.makeText(getApplicationContext(), "Yet to design Friends List", Toast.LENGTH_LONG).show();break;
+        case 2:
+        	Toast.makeText(getApplicationContext(), "Yet to design Contacts view", Toast.LENGTH_LONG).show();break;
+        case 3:
+        	Toast.makeText(getApplicationContext(), "Yet to design Logout option", Toast.LENGTH_LONG).show();break;
      		  
         }   
    
@@ -193,8 +195,23 @@ public class MainActivity extends FragmentActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+             doubleBackToExitPressedOnce=false;   
+
+            }
+        }, 2000);
+    } 
+
     
 }
