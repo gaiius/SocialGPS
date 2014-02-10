@@ -38,7 +38,7 @@ public class Registration extends Activity {
 		ph_no= tm.getLine1Number();
 		e3=(EditText) findViewById(R.id.editText3);
 		e3.setText(ph_no);
-	
+		e3.setEnabled(false);
 		b1= new Button(this);
 		b1=(Button) findViewById(R.id.button);
 		upd = new user_pass_dao();
@@ -74,7 +74,6 @@ public class Registration extends Activity {
 					udt = new user_detail_dto(upd);			
 					udt.insert(udd);
 					System.out.println("upd insert");
-					
 					
 					d.insert(upd);							//storing in offline db
 					d.insert(udd);

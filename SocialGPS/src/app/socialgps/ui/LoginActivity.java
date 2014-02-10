@@ -38,6 +38,7 @@ public class LoginActivity extends Activity {
 			ph_no= tm.getLine1Number();
 			user_name = (EditText) findViewById(R.id.editText1);
 			user_name.setText(ph_no);
+			user_name.setEnabled(false);
 			b1 = new Button(this);
 			b1 = (Button) findViewById(R.id.button);
 			t1 = new TextView(this);
