@@ -42,7 +42,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
-    private DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout; // sample change comment
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
