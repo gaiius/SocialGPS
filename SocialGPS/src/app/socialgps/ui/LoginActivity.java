@@ -5,6 +5,7 @@ import app.socialgps.ui.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,17 +23,21 @@ public class LoginActivity extends Activity {
 	TextView t1;
 	EditText user_name;
 	EditText password;
-	String userid, passwd;
+	String userid, passwd, ph_no;
 	user_pass_dao upd;
 	user_pass_dto upt;
 	DatabaseHandler d;
-	int t;
+	TelephonyManager tm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		try {
+			tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE); 
+			ph_no= tm.getLine1Number();
+			user_name = (EditText) findViewById(R.id.editText1);
+			user_name.setText(ph_no);
 			b1 = new Button(this);
 			b1 = (Button) findViewById(R.id.button);
 			t1 = new TextView(this);
@@ -67,10 +72,10 @@ public class LoginActivity extends Activity {
 					if (!local_check_now()) {
 						if (check_now()) {
 							if (update)
-								t = d.update(upd);
+								d.update(upd);
 							else
-								t = d.insert(upd);
-							System.out.print("Test case" + t);
+								 d.insert(upd);
+							//System.out.print("Test case" + t);
 							// continue next activity
 							Intent i = new Intent(getApplicationContext(),
 									MainActivity.class);

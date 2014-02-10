@@ -8,6 +8,7 @@ import app.socialgps.ui.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -21,8 +22,8 @@ import app.socialgps.db.dto.*;
 public class Registration extends Activity {
 	Button b1;
 	EditText e1,e2,e3, e4, e5;
-	String s1, s2,s3,s4, s5;
-	//user_pass_dao admin;
+	String s1, s2,s3,s4, s5, ph_no;
+	TelephonyManager tm;
 	user_detail_dao udd;
 	user_detail_dto udt;
 	user_pass_dao upd;
@@ -33,6 +34,11 @@ public class Registration extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
+		tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE); 
+		ph_no= tm.getLine1Number();
+		e3=(EditText) findViewById(R.id.editText3);
+		e3.setText(ph_no);
+	
 		b1= new Button(this);
 		b1=(Button) findViewById(R.id.button);
 		upd = new user_pass_dao();
