@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright 2013 The Android Open Source Project
 
@@ -12,16 +13,19 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  -->
+-->
 
 <resources>
+
     <string name="app_name">Loco Bava</string>
+
     <string-array name="menu_items">
         <item>Map</item>
         <item>Friends</item>
         <item>Contacts</item>
-        <item>Logout</item>        
+        <item>Logout</item>
     </string-array>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -29,4 +33,7 @@
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_contact">ContactActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

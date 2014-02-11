@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity {
 	user_pass_dto upt;
 	DatabaseHandler d;
     private String[] menuItems;
-    int newPosition = 0;
+    int newPosition = 0;    
     private boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -160,19 +160,22 @@ public class MainActivity extends FragmentActivity {
         setTitle(menuItems[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
     	//Fragment mapfragment = new MapsFragment();
+      //MapsFragment defined at top        	
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         switch(position){
         case 0:        	 
-     			//googleMap = (GoogleMap) mapFragment.getMap();
-             	MapsFragment mf = new MapsFragment();             		
-                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();                 
-                 ft.replace(R.id.content_frame, mf).commit();
-                 break;
+     			//googleMap = (GoogleMap) mapFragment.getMap(); 
+        	MapsFragment mf = new MapsFragment();
+            ft.replace(R.id.content_frame, mf).commit();
+            break;
         case 1:
         	Toast.makeText(getApplicationContext(), "Yet to design Friends List", Toast.LENGTH_LONG).show();break;
         	
         case 2:
-        	Toast.makeText(getApplicationContext(), "Yet to design Contacts view", Toast.LENGTH_LONG).show();break;
+        	ContactListFragment clf = new ContactListFragment();
+        	//Toast.makeText(getApplicationContext(), "Yet to design Contacts view", Toast.LENGTH_LONG).show();        	                 
+            ft.replace(R.id.content_frame, clf).commit();break;
         	
         case 3:
         	AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);

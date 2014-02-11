@@ -1,8 +1,10 @@
 package app.socialgps.middleware;
 
+import java.io.Serializable;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class UserInfo {
+public class UserInfo implements Serializable{
 
 	public String userId;
 	public String name;
