@@ -19,6 +19,7 @@ package app.socialgps.ui;
 import app.socialgps.db.DatabaseHandler;
 import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.user_pass_dto;
+import app.socialgps.middleware.contact_sync;
 import app.socialgps.ui.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -58,13 +60,18 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        d = new DatabaseHandler(this);
+		d.close();
+try	{
+         contact_sync cs = new contact_sync(this);
+         System.out.println("affected row"+cs.sync_contact_db(getApplicationContext().getContentResolver()));
+} catch(Exception e)	{Log.d("way",e.toString()); }
+        
         mTitle = mDrawerTitle = getTitle();
         menuItems = getResources().getStringArray(R.array.menu_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        d = new DatabaseHandler(this);
-		
+       
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener

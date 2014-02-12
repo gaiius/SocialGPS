@@ -21,6 +21,7 @@ public class getJson { //JSON to DAO Conversation
 	public getJson(String uid, String query) throws JSONException {  // __Cons for getting JSON object, uid for user authentication
 		json_1 = new return_Json().execute(uid, query);
 		try {
+		
 			products = json_1.get();
 			result=products.getInt("res_code");
 			Log.d("Returns", products.toString());
@@ -70,7 +71,43 @@ public class getJson { //JSON to DAO Conversation
 
 	}
 	
+	public List<user_detail_dao> get_user_detailss() //json to get collection of friend details dao
+	{
+		try
+		{
+			if(get_res_code()==3)
+			{
+			
+	List<user_detail_dao> lfd = new ArrayList<user_detail_dao>();
 
+	for (int i=0;i<products.getJSONArray("product").length()-1;i++)
+	{
+		user_detail_dao upd = new user_detail_dao();
+		upd.set_user_id(products.getJSONArray("product").getJSONObject(0)
+				.getString("user_id"));
+		upd.set_user_name(products.getJSONArray("product").getJSONObject(0)
+				.getString("user_name"));
+		upd.set_phone(products.getJSONArray("product").getJSONObject(0)
+				.getLong("phone"));
+		upd.set_status(products.getJSONArray("product").getJSONObject(0)
+				.getString("status"));
+		upd.set_email_id(products.getJSONArray("product").getJSONObject(0)
+				.getString("email_id"));
+		lfd.add(upd);
+	}
+	return lfd;
+			}
+			else
+				return null;
+		}
+	catch (JSONException e) {
+		Log.e("Error in getting JSON value", e.toString());
+		return null;
+	} catch (Exception e) {
+		System.out.println("Genral Error" + e.toString());
+		return null;
+	} 
+}	
 	
 
 	public user_detail_dao get_user_detail_result() { // JSON to user_detail dao
@@ -165,7 +202,7 @@ class return_Json extends AsyncTask<String, String, JSONObject> {//background ta
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("uid", args[0]));
 			params.add(new BasicNameValuePair("query", args[1]));
-			json = jsonParser.makeHttpRequest(url_all_products, "GET", params);
+			json = jsonParser.makeHttpRequest(url_all_products, "POST", params);
 			return json;
 		} catch (Exception e) {
 			Log.e("Err", e.toString());

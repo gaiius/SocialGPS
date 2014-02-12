@@ -46,8 +46,7 @@ public class LoginActivity extends Activity {
 			d = new DatabaseHandler(this);
 			if(init())		//checking db
 			{
-				Intent i = new Intent(getApplicationContext(), 	//redirecting to main page
-						MainActivity.class);
+				Intent i = new Intent(getApplicationContext(), 	MainActivity.class); 	//redirecting to main page
 				startActivity(i);
 				finish();
 				Log.d("already there", "forwarding");
@@ -145,6 +144,7 @@ public class LoginActivity extends Activity {
 			Log.e("Main", e.toString());
 			return true;
 		}
+		finally{ d.close(); }
 	}
 
 	public boolean check_empty() {
@@ -169,6 +169,7 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean local_check_now() {
+		try{
 		if (check_empty()) {
 			Log.d("Event Running", "checking local");
 			// System.out.println("inserting"+d.insert(upd));
@@ -190,6 +191,8 @@ public class LoginActivity extends Activity {
 			Log.d("checking local", "no entry");
 			return false;
 		}
+		} catch(Exception e) { Log.d("login db", e.toString()); return false; }
+		finally{ d.close(); }
 	}
 
 	public boolean check_now() {
@@ -215,7 +218,7 @@ public class LoginActivity extends Activity {
 				return false;
 			}
 		} catch (Exception e) {
-			Log.e("Main", e.toString());
+		  //	Log.e("Main", e.toString());
 			return false;
 		}
 	}

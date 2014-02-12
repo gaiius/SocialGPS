@@ -1,8 +1,10 @@
 package app.socialgps.db.dao;
 
-public class user_detail_dao
+import java.io.Serializable;
+
+public class user_detail_dao implements Serializable
 {
-	private String user_id, user_name, email_id, status;
+	private String user_id, user_name, email_id, status, dispaly_name;
 	private Long phone;
 	public void set_user_id(String user_id)
 	{
@@ -23,6 +25,10 @@ public class user_detail_dao
 	public void set_phone(Long ph)
 	{
 		this.phone= ph;
+	}
+	public void set_display_name(String s)
+	{
+		this.dispaly_name=s;
 	}
 	
 	public String get_user_id()
@@ -45,4 +51,9 @@ public class user_detail_dao
 	{
 		return this.phone;
 	}
+	public String get_display_name()
+	{
+		return this.dispaly_name;
+	}
+	
 }
