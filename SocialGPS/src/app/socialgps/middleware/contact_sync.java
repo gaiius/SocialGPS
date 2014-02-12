@@ -76,7 +76,7 @@ public class contact_sync {
 		}	catch(Exception e){	Log.e("Exception 3 ",e.toString()); return 0;	}
 		finally
 		{
-			d.close();
+			d.close(); //
 		}
 	}
 	

@@ -21,6 +21,7 @@ public class getJson { //JSON to DAO Conversation
 	public getJson(String uid, String query) throws JSONException {  // __Cons for getting JSON object, uid for user authentication
 		json_1 = new return_Json().execute(uid, query);
 		try {
+		
 			products = json_1.get();
 			result=products.getInt("res_code");
 			Log.d("Returns", products.toString());

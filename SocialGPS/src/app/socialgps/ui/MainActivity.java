@@ -63,8 +63,8 @@ public class MainActivity extends FragmentActivity {
         d = new DatabaseHandler(this);
 		d.close();
 try	{
-        contact_sync cs = new contact_sync(this);
-        System.out.println("affected row"+cs.sync_contact_db(getApplicationContext().getContentResolver()));
+         contact_sync cs = new contact_sync(this);
+         System.out.println("affected row"+cs.sync_contact_db(getApplicationContext().getContentResolver()));
 } catch(Exception e)	{Log.d("way",e.toString()); }
         
         mTitle = mDrawerTitle = getTitle();

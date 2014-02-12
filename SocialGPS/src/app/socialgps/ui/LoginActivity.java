@@ -218,7 +218,7 @@ public class LoginActivity extends Activity {
 				return false;
 			}
 		} catch (Exception e) {
-			Log.e("Main", e.toString());
+		  //	Log.e("Main", e.toString());
 			return false;
 		}
 	}

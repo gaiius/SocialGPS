@@ -17,8 +17,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "loc_db";
 
-
-	public DatabaseHandler(Context context) {
+public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
 	}

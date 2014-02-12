@@ -53,4 +53,5 @@ public class user_detail_dao
 	{
 		return this.dispaly_name;
 	}
+	
 }
