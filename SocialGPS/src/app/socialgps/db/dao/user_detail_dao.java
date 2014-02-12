@@ -2,7 +2,7 @@ package app.socialgps.db.dao;
 
 public class user_detail_dao
 {
-	private String user_id, user_name, email_id, status;
+	private String user_id, user_name, email_id, status, dispaly_name;
 	private Long phone;
 	public void set_user_id(String user_id)
 	{
@@ -24,6 +24,10 @@ public class user_detail_dao
 	{
 		this.phone= ph;
 	}
+	public void set_display_name(String s)
+	{
+		this.dispaly_name=s;
+	}
 	
 	public String get_user_id()
 	{
@@ -44,5 +48,9 @@ public class user_detail_dao
 	public Long get_phone()
 	{
 		return this.phone;
+	}
+	public String get_display_name()
+	{
+		return this.dispaly_name;
 	}
 }

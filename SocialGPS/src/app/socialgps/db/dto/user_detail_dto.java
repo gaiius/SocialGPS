@@ -1,5 +1,7 @@
 package app.socialgps.db.dto;
 
+import java.util.List;
+
 import android.util.Log;
 import app.socialgps.db.getJson;
 import app.socialgps.db.dao.user_detail_dao;
@@ -67,6 +69,20 @@ public class user_detail_dto {
 		catch(Exception e)
 		{
 			Log.e("Error in user_detail dao Selection", e.toString());
+			return null;
+		}
+	}
+	public List select_all(String c)
+	{
+		try
+		{
+			query="select * from user_detail where "+c;
+			gj= new getJson(upd.get_user_id(),query);
+			return gj.get_user_detailss();
+		}
+		catch(Exception e)
+		{
+			Log.e("Error in user_detail dao All Selection", e.toString());
 			return null;
 		}
 	}

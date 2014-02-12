@@ -30,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Log.d("creating: ", "tables..");
 		db.execSQL("CREATE TABLE user_pass ( user_id  TEXT PRIMARY KEY, passwd  TEXT)");
-		db.execSQL("CREATE TABLE user_detail ( user_id  TEXT PRIMARY KEY, user_name  TEXT, phone INTEGER, email_id TEXT, status TEXT)");
+		db.execSQL("CREATE TABLE user_detail ( user_id  TEXT PRIMARY KEY, user_name  TEXT, phone INTEGER, email_id TEXT, status TEXT, display_name TEXT)");
 		db.execSQL("CREATE TABLE friend_detail (user_id TEXT, friend_id TEXT, status TEXT)");
 		db.execSQL("CREATE TABLE location_detail ( user_id  TEXT PRIMARY KEY, location TEXT, time  TEXT)");
 		Log.d("created: ", "tables..");
@@ -212,6 +212,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	
+	
 	public user_detail_dao select(user_detail_dao upd) {		// for user_detail table
 		try
 		{
@@ -241,6 +243,47 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	public List<user_detail_dao> select_all() {		//for user_detail table retrieve all data 
+		try
+		{
+		user_detail_dao upd_nu = new user_detail_dao();
+		List<user_detail_dao> contactList = new ArrayList<user_detail_dao>();
+		
+		db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select * from user_detail", null);
+		if (!cursor.moveToFirst())
+					return null; 
+	      	
+		else	{
+			if (cursor.moveToFirst()) {
+				System.out.println("Empty "+cursor.getCount());
+		   		do {
+		   			upd_nu.set_user_id(cursor.getString(0));
+		   			upd_nu.set_user_name(cursor.getString(1));
+		   			upd_nu.set_phone(cursor.getLong(2));
+		   			upd_nu.set_email_id(cursor.getString(3));
+		   			upd_nu.set_status(cursor.getString(4));
+		   			upd_nu.set_status(cursor.getString(5));
+		   			contactList.add(upd_nu);
+				} while (cursor.moveToNext());
+			}
+			else
+				return null;
+		
+		return contactList;
+		}
+		}
+		catch(Exception e)
+		{
+			Log.e("[Exception in Sqlite selectiont_friend_detail]", e.toString());
+			return null;
+		}
+		finally
+		{
+		//	db.close(); // Closing database connection
+		}
+	}
+	
 	public List<friend_detail_dao> select(friend_detail_dao upd) {		// for user_detail table
 		try
 		{
@@ -259,7 +302,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 					upd_nu.set_user_id(cursor.getString(0));
 					upd_nu.set_friend_id(cursor.getString(1));
 					upd_nu.set_status(cursor.getString(2));	// Adding contact to list
-					contactList.add(upd);
+					contactList.add(upd_nu);
 				} while (cursor.moveToNext());
 			}
 			else
