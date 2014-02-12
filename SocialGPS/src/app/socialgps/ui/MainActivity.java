@@ -181,6 +181,12 @@ public class MainActivity extends FragmentActivity {
         	AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("Logout");
             alertDialog.setMessage("Are you sure you want Logout?");
+           
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int which) {
                 	upd= new user_pass_dao();
@@ -188,11 +194,6 @@ public class MainActivity extends FragmentActivity {
                 	   Toast.makeText(getApplicationContext(), upd.get_user_id()+" logged out "+d.delete(upd), Toast.LENGTH_SHORT).show();
                     finish();
                  }
-            });
-            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
             });
      
             // Showing Alert Message

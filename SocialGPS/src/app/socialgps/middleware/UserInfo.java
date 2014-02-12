@@ -6,6 +6,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class UserInfo implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String userId;
 	public String name;
 	public String phone;

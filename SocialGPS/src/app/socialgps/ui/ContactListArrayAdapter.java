@@ -12,9 +12,11 @@ import android.widget.TextView;
 public class ContactListArrayAdapter extends ArrayAdapter<String> {
   private final Context context;
   private final String[] values;
+  //declare class object/list type here
 
+  
   public ContactListArrayAdapter(Context context, String[] values) {
-    super(context, R.layout.contact_fragment, values);
+    super(context, R.layout.contact_fragment, values); // replace values string with the passing class object/list type
     this.context = context;
     this.values = values;
   }
@@ -26,6 +28,8 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
     View rowView = inflater.inflate(R.layout.contact_fragment, parent, false);
     TextView contactName = (TextView) rowView.findViewById(R.id.contact_name);
     TextView friendStatus = (TextView) rowView.findViewById(R.id.contact_friend_status);
+    
+    //get position in list and assign object and use it to set values
     contactName.setText(values[position]);//set contact name
     // Set "friends" textview for friends
     String s = values[position];

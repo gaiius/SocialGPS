@@ -12,6 +12,8 @@ import app.socialgps.middleware.UserInfo;
 //connects with the adapter class and sets the view in main class
 public class ContactListFragment extends ListFragment  
 {  
+	//In this class constructor we have to retrieve all matching contacts from server and assign it to a class object or list type
+	
 	String[] contactNames = new String[] { "Name 1", "Name 2", "Name 3",
 	        "Name 4", "Name 5", "Name 6", "Name 7", "Name 8",
 	        "Name 9", "Name 10" };
@@ -33,7 +35,7 @@ public class ContactListFragment extends ListFragment
  @Override  
  public View onCreateView(LayoutInflater inflater, ViewGroup container,  
    Bundle savedInstanceState) {  
-  ContactListArrayAdapter adapter = new ContactListArrayAdapter(getActivity().getApplicationContext(), contactNames);  //in doubt
+  ContactListArrayAdapter adapter = new ContactListArrayAdapter(getActivity().getApplicationContext(), contactNames); //pass the class object/list type instead of contactNames
   setListAdapter(adapter);  
   return super.onCreateView(inflater, container, savedInstanceState);  
  }  
