@@ -22,23 +22,8 @@ public class ContactListFragment extends ListFragment {
 	// In this class constructor we have to retrieve all matching contacts from
 	// server and assign it to a class object or list type
 
-	String[] contactNames = new String[] { "Name 1", "Name 2", "Name 3",
-			"Name 4", "Name 5", "Name 6", "Name 7", "Name 8", "Name 9",
-			"Name 10" };
-
 	List<user_detail_dao> contacts = new ArrayList<user_detail_dao>();
-	DatabaseHandler d;
-
-	public ContactListFragment() {
-		super();
-		try {
-			contacts = get_list();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			Log.d("contact retrieve", "In constructor of contactlistfragment\n" + e.toString());
-			e.printStackTrace();
-		}
-	}
+	DatabaseHandler d;	
 
 	// listener for contact click
 	@Override
@@ -52,9 +37,13 @@ public class ContactListFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		contacts = get_list();
+		System.out.println("contacts obtained");
 		ContactListArrayAdapter adapter = new ContactListArrayAdapter(
 				getActivity().getApplicationContext(), contacts); // pass the class object/list type instead of contactNames
-			setListAdapter(adapter);		
+		System.out.println("contactlistadapter created");
+			setListAdapter(adapter);				
+			System.out.println("contactlistadapter set");
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -62,12 +51,14 @@ public class ContactListFragment extends ListFragment {
 		try {
 			d = new DatabaseHandler(getActivity().getApplicationContext());
 			user_pass_dao udd = new user_pass_dao();
-			;
 			udd = d.check_record();
+			System.out.println("record checked");
 			contacts = d.select_all();
+			System.out.println("contacts selected");
 			contacts= remove_mine(udd.get_user_id(), contacts);
+			System.out.println("mine removed");
 			System.out.println("Frien siz " + contacts.size() + " "
-					+ contacts.get(0).get_display_name());
+					+ contacts.get(0).get_display_name() + contacts.get(0).get_phone());
 			return contacts;
 		} catch (Exception e) {
 			Log.d("getlist exception", "ContactListFragment getlist function \n" + e.toString());

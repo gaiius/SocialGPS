@@ -18,6 +18,7 @@ public class ContactActivity extends Activity {
 	TextView status;
 	Button addFriendButton;
 	String[] contactNames;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,9 +28,10 @@ public class ContactActivity extends Activity {
 		try {
 			Intent i = getIntent();
 			System.out.println("intent created");
-			user_detail_dao uio = (user_detail_dao) i.getSerializableExtra("user_detail");
+			user_detail_dao uio = (user_detail_dao) i
+					.getSerializableExtra("user_detail");
 			System.out.println("obtained serialized object");
-			
+
 			name = (TextView) findViewById(R.id.contactName);
 			number = (TextView) findViewById(R.id.contactNumber);
 			status = (TextView) findViewById(R.id.contactStatus);
@@ -40,25 +42,25 @@ public class ContactActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		addFriendButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				 Toast.makeText(getApplicationContext(),
-							"FriendButton onClickListener activated",
-							Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(),
+						"FriendButton onClickListener activated",
+						Toast.LENGTH_LONG).show();
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.contact, menu);
-//		return true;
-//	}
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// // Inflate the menu; this adds items to the action bar if it is present.
+	// getMenuInflater().inflate(R.menu.contact, menu);
+	// return true;
+	// }
 
 }
