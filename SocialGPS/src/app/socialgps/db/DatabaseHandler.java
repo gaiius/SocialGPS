@@ -88,9 +88,15 @@ public DatabaseHandler(Context context) {
 		values.put("phone", upd.get_phone().intValue());  // alert may b error come
 		values.put("email_id", upd.get_email_id()); 
 		values.put("status", upd.get_status());
+		//if(upd.get_display_name().isEmpty())
+		//	return (int)db.insert("user_detail", null, values);	
+		values.put("display_name", upd.get_display_name());
+		return (int)db.insert("user_detail", null, values);
+		
+		}
+			
 		
 		// Inserting Row
-		return (int)db.insert("user_detail", null, values);	}
 		catch(Exception e)
 		{
 			Log.e("[Exception in Sqlite insert_user_detail]", e.toString());
@@ -228,6 +234,7 @@ public DatabaseHandler(Context context) {
 		upd_nu.set_phone(cursor.getLong(2));
 		upd_nu.set_email_id(cursor.getString(3));
 		upd_nu.set_status(cursor.getString(4));
+		upd_nu.set_display_name(cursor.getString(5));
 		return upd_nu;
 			}
 		}
@@ -262,7 +269,8 @@ public DatabaseHandler(Context context) {
 		   			upd_nu.set_phone(cursor.getLong(2));
 		   			upd_nu.set_email_id(cursor.getString(3));
 		   			upd_nu.set_status(cursor.getString(4));
-		   			upd_nu.set_status(cursor.getString(5));
+		   			upd_nu.set_display_name(cursor.getString(5));
+		   			
 		   			contactList.add(upd_nu);
 				} while (cursor.moveToNext());
 			}

@@ -38,7 +38,7 @@ public class Registration extends Activity {
 		ph_no= tm.getLine1Number();
 		e3=(EditText) findViewById(R.id.editText3);
 		e3.setText(ph_no);
-		e3.setEnabled(false);
+	//	e3.setEnabled(false);
 		b1= new Button(this);
 		b1=(Button) findViewById(R.id.button);
 		upd = new user_pass_dao();

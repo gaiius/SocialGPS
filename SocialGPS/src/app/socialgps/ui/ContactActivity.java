@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.middleware.UserInfo;
 
 public class ContactActivity extends Activity {
@@ -26,17 +27,17 @@ public class ContactActivity extends Activity {
 		try {
 			Intent i = getIntent();
 			System.out.println("intent created");
-			UserInfo uio = (UserInfo) i.getSerializableExtra("userinfoobj");
+			user_detail_dao uio = (user_detail_dao) i.getSerializableExtra("user_detail");
 			System.out.println("obtained serialized object");
+			
 			name = (TextView) findViewById(R.id.contactName);
 			number = (TextView) findViewById(R.id.contactNumber);
 			status = (TextView) findViewById(R.id.contactStatus);
 			addFriendButton = (Button) findViewById(R.id.contactButton);
-			name.setText(uio.name);
-			number.setText(uio.phone);
-			status.setText(uio.status);
+			name.setText(uio.get_display_name());
+			number.setText(uio.get_user_id());
+			status.setText(uio.get_status());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -1,6 +1,8 @@
 package app.socialgps.db.dao;
 
-public class user_detail_dao
+import java.io.Serializable;
+
+public class user_detail_dao implements Serializable
 {
 	private String user_id, user_name, email_id, status, dispaly_name;
 	private Long phone;
