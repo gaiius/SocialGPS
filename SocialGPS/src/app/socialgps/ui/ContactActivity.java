@@ -20,7 +20,7 @@ public class ContactActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.contact_view);
+		setContentView(R.layout.activity_contact);
 		System.out.println("layout set");
 
 		try {

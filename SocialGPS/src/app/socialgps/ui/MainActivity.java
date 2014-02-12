@@ -170,7 +170,9 @@ public class MainActivity extends FragmentActivity {
             ft.replace(R.id.content_frame, mf).commit();
             break;
         case 1:
-        	Toast.makeText(getApplicationContext(), "Yet to design Friends List", Toast.LENGTH_LONG).show();break;
+        	FriendListFragment flf = new FriendListFragment();
+        	//Toast.makeText(getApplicationContext(), "Yet to design Contacts view", Toast.LENGTH_LONG).show();        	                 
+            ft.replace(R.id.content_frame, flf).commit();break;
         	
         case 2:
         	ContactListFragment clf = new ContactListFragment();

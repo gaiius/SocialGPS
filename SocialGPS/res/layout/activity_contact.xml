@@ -18,7 +18,10 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_margin="10dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="20dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:background="@android:color/darker_gray"
         android:padding="10dp" />
 
@@ -26,8 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingBottom="20dip"
-        android:paddingTop="20dip" >
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip" >
 
         <TextView
             android:id="@+id/contactNameLabel"
@@ -36,7 +39,7 @@
             android:gravity="right"
             android:paddingRight="30dp"
             android:text="Name :"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/contactName"
@@ -51,8 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingBottom="20dip"
-        android:paddingTop="20dip" >
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip" >
 
         <TextView
             android:id="@+id/contactNumberLabel"
@@ -61,7 +64,7 @@
             android:gravity="right"
             android:paddingRight="30dp"
             android:text="Number :"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/contactNumber"
@@ -76,8 +79,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_margin="20dip"
-        android:background="@android:color/darker_gray"
-        android:padding="20dp" />
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,8 +92,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            
             android:text="This is my status"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -99,9 +100,8 @@
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_margin="20dip"
-            android:background="@android:color/darker_gray"
-            android:padding="20dp" />
-
+            android:background="@android:color/darker_gray"/>
+            
         <Button
             android:id="@+id/contactButton"
             android:layout_width="200dip"

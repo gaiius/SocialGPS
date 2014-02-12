@@ -230,7 +230,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int ScrollView01=0x7f050014;
-        public static final int action_settings=0x7f05001c;
+        public static final int action_settings=0x7f05001e;
         public static final int button=0x7f05000f;
         public static final int contactButton=0x7f05000b;
         public static final int contactHeading=0x7f050005;
@@ -248,10 +248,12 @@ containing a value of this type.
         public static final int editText3=0x7f050016;
         public static final int editText4=0x7f050017;
         public static final int editText5=0x7f050018;
+        public static final int friend_name=0x7f05001b;
+        public static final int friend_view_toggle=0x7f05001c;
         public static final int hybrid=0x7f050004;
         public static final int left_drawer=0x7f050013;
         public static final int linearLayout1=0x7f050015;
-        public static final int map=0x7f05001b;
+        public static final int map=0x7f05001d;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
@@ -268,8 +270,8 @@ containing a value of this type.
         public static final int activity_main=0x7f030002;
         public static final int activity_registration=0x7f030003;
         public static final int contact_fragment=0x7f030004;
-        public static final int contact_view=0x7f030005;
-        public static final int drawer_list_item=0x7f030006;
+        public static final int drawer_list_item=0x7f030005;
+        public static final int friends_fragment=0x7f030006;
         public static final int map_fragment=0x7f030007;
     }
     public static final class menu {

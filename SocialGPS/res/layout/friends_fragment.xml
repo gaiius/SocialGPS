@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:paddingTop="15dip"  
+    android:paddingBottom="15dip"
     android:gravity="center_vertical"
+    
     android:layout_height="60dip" >
 
      <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"       
         android:gravity="left"
@@ -15,14 +18,13 @@
         android:textColor="#404040" >
     </TextView>
 
-     <TextView
-         android:id="@+id/contact_friend_status"
-         android:layout_width="fill_parent"
+     <Switch
+         android:id="@+id/friend_view_toggle"
+         android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:gravity="right"         
-         android:paddingRight="20dip"
-         android:text="Friends"
-         android:textColor="#0279ec"
-         android:textSize="12sp" />
+          android:layout_alignParentRight="true" 
+          android:paddingRight="20dip"/>
 
-</LinearLayout> 
+    
+
+</RelativeLayout> 
