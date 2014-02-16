@@ -14,12 +14,10 @@ import app.socialgps.db.dao.*;
 public class DatabaseHandler extends SQLiteOpenHelper {
 	SQLiteDatabase db;
 	private static final int DATABASE_VERSION = 1;
-
 	private static final String DATABASE_NAME = "loc_db";
 
 public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		
 	}
 	public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
@@ -252,7 +250,7 @@ public DatabaseHandler(Context context) {
 	public List<user_detail_dao> select_all() {		//for user_detail table retrieve all data 
 		try
 		{
-		user_detail_dao upd_nu = new user_detail_dao();
+		user_detail_dao upd_nu ;
 		List<user_detail_dao> contactList = new ArrayList<user_detail_dao>();
 		
 		db = this.getReadableDatabase();
@@ -264,13 +262,14 @@ public DatabaseHandler(Context context) {
 			if (cursor.moveToFirst()) {
 				System.out.println("Empty "+cursor.getCount());
 		   		do {
+		   			upd_nu = new user_detail_dao();
 		   			upd_nu.set_user_id(cursor.getString(0));
 		   			upd_nu.set_user_name(cursor.getString(1));
 		   			upd_nu.set_phone(cursor.getLong(2));
 		   			upd_nu.set_email_id(cursor.getString(3));
 		   			upd_nu.set_status(cursor.getString(4));
 		   			upd_nu.set_display_name(cursor.getString(5));
-		   			
+		   			Log.d("Select_all func()", upd_nu.get_display_name());
 		   			contactList.add(upd_nu);
 				} while (cursor.moveToNext());
 			}
@@ -499,7 +498,22 @@ public int delete(location_detail_dao upd) {
 			}
 	}
 
-
+public int truncate_db() {
+	try		{			
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete("location_detail",null,null);
+		db.delete("friend_detail",null,null);
+		db.delete("user_detail",null,null);
+		return db.delete("user_pass",null,null);
+		}
+		catch(Exception e)		{
+			Log.e("[Exception in Sqlite deletion_all]", e.toString());
+			return 0;
+		}
+		finally		{
+		//	db.close(); 
+		}
+}
 public void close_db()
 {
 	db.close();

@@ -83,15 +83,15 @@ public class getJson { //JSON to DAO Conversation
 	for (int i=0;i<products.getJSONArray("product").length()-1;i++)
 	{
 		user_detail_dao upd = new user_detail_dao();
-		upd.set_user_id(products.getJSONArray("product").getJSONObject(0)
+		upd.set_user_id(products.getJSONArray("product").getJSONObject(i)
 				.getString("user_id"));
-		upd.set_user_name(products.getJSONArray("product").getJSONObject(0)
+		upd.set_user_name(products.getJSONArray("product").getJSONObject(i)
 				.getString("user_name"));
-		upd.set_phone(products.getJSONArray("product").getJSONObject(0)
+		upd.set_phone(products.getJSONArray("product").getJSONObject(i)
 				.getLong("phone"));
-		upd.set_status(products.getJSONArray("product").getJSONObject(0)
+		upd.set_status(products.getJSONArray("product").getJSONObject(i)
 				.getString("status"));
-		upd.set_email_id(products.getJSONArray("product").getJSONObject(0)
+		upd.set_email_id(products.getJSONArray("product").getJSONObject(i)
 				.getString("email_id"));
 		lfd.add(upd);
 	}

@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 		d.close();
 		try {
 			contact_sync cs = new contact_sync(this);
-			System.out.println("affected row"
+			System.out.println("affected row :"
 					+ cs.sync_contact_db(getApplicationContext()
 							.getContentResolver()));
 		} catch (Exception e) {
@@ -220,7 +220,7 @@ public class MainActivity extends FragmentActivity {
 							Toast.makeText(
 									getApplicationContext(),
 									upd.get_user_id() + " logged out "
-											+ d.delete(upd), Toast.LENGTH_SHORT)
+											+ d.truncate_db(), Toast.LENGTH_SHORT)
 									.show();
 							finish();
 						}

@@ -55,10 +55,10 @@ public class ContactListFragment extends ListFragment {
 			System.out.println("record checked");
 			contacts = d.select_all();
 			System.out.println("contacts selected");
-			contacts= remove_mine(udd.get_user_id(), contacts);
+			//contacts= remove_mine(udd.get_user_id(), contacts);
 			System.out.println("mine removed");
-			System.out.println("Frien siz " + contacts.size() + " "
-					+ contacts.get(0).get_display_name() + contacts.get(0).get_phone());
+			for (int i=0; i<contacts.size(); i++)
+				System.out.println("Frien siz " + contacts.size() + " "+ contacts.get(i).get_display_name()+" - " + contacts.get(i).get_phone().toString());
 			return contacts;
 		} catch (Exception e) {
 			Log.d("getlist exception", "ContactListFragment getlist function \n" + e.toString());

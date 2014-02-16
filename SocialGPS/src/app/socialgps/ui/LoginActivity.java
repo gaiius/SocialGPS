@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
 			ph_no= tm.getLine1Number();
 			user_name = (EditText) findViewById(R.id.editText1);
 			user_name.setText(ph_no);
-			user_name.setEnabled(false);
+			//user_name.setEnabled(false);
 			b1 = new Button(this);
 			b1 = (Button) findViewById(R.id.button);
 			t1 = new TextView(this);
@@ -71,10 +71,12 @@ public class LoginActivity extends Activity {
 					upt = new user_pass_dto();
 					if (!local_check_now()) {
 						if (check_now()) {
-							if (update)
+							if (update)	{
 								d.update(upd);
-							else
+								d.close(); }
+							else {
 								 d.insert(upd);
+								 d.close(); }
 							//System.out.print("Test case" + t);
 							// continue next activity
 							Intent i = new Intent(getApplicationContext(),
