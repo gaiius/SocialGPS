@@ -145,7 +145,7 @@ public class contact_sync {
 							udd.set_phone(Long.parseLong(phone));
 							udd.set_display_name(name);
 							if (phone.length() > 9) {
-								Log.d("phone:", phone);
+								System.out.print("phone:"+ phone);
 								ans.add(udd);
 							}
 

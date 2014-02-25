@@ -46,22 +46,34 @@ public class ContactListFragment extends ListFragment {
 			System.out.println("contactlistadapter set");
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-
+	
+	public void onResume() {
+	    super.onResume();  // Always call the superclass method first
+		contacts = get_list();
+		System.out.println("contacts obtained");
+		ContactListArrayAdapter adapter = new ContactListArrayAdapter(
+				getActivity().getApplicationContext(), contacts); // pass the class object/list type instead of contactNames
+		System.out.println("contactlistadapter created");
+			setListAdapter(adapter);				
+			System.out.println("contactlistadapter set");
+	
+	    
+	}
 	public List<user_detail_dao> get_list() {
 		try {
 			d = new DatabaseHandler(getActivity().getApplicationContext());
 			user_pass_dao udd = new user_pass_dao();
 			udd = d.check_record();
 			System.out.println("record checked");
-			contacts = d.select_all();
+			contacts = d.select_all_user_detail();
 			System.out.println("contacts selected");
 			//contacts= remove_mine(udd.get_user_id(), contacts);
 			System.out.println("mine removed");
-			for (int i=0; i<contacts.size(); i++)
-				System.out.println("Frien siz " + contacts.size() + " "+ contacts.get(i).get_display_name()+" - " + contacts.get(i).get_phone().toString());
+		//	for (int i=0; i<contacts.size(); i++)
+		//		System.out.println("Frien siz " + contacts.size() + " "+ contacts.get(i).get_display_name()+" - " + contacts.get(i).get_phone().toString());
 			return contacts;
 		} catch (Exception e) {
-			Log.d("getlist exception", "ContactListFragment getlist function \n" + e.toString());
+			Log.d("getlist contact fragment exception",  e.toString());
 			return null;
 		} finally {
 			d.close();

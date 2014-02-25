@@ -16,14 +16,28 @@
 
 package app.socialgps.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import app.socialgps.db.DatabaseHandler;
+import app.socialgps.db.JSONParser;
 import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.user_pass_dto;
 import app.socialgps.middleware.contact_sync;
+import app.socialgps.middleware.friend_sync;
 import app.socialgps.ui.R;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -54,7 +68,10 @@ public class MainActivity extends FragmentActivity {
 	private String[] menuItems;
 	int newPosition = 0;
 	private boolean doubleBackToExitPressedOnce = false;
-
+	public Context context=this;
+ 
+   
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,12 +79,10 @@ public class MainActivity extends FragmentActivity {
 		d = new DatabaseHandler(this);
 		d.close();
 		try {
-			contact_sync cs = new contact_sync(this);
-			System.out.println("affected row :"
-					+ cs.sync_contact_db(getApplicationContext()
-							.getContentResolver()));
-		} catch (Exception e) {
-			Log.d("way", e.toString());
+			callAsynchronousTask();
+
+			 } catch (Exception e) {
+			Log.d("main activitiy on create()", e.toString());
 		}
 
 		mTitle = mDrawerTitle = getTitle();
@@ -142,8 +157,15 @@ public class MainActivity extends FragmentActivity {
 		// Handle action buttons
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			Toast.makeText(this, "Yet to design Settings", Toast.LENGTH_LONG)
-					.show();
+			Intent i = new Intent(getApplicationContext(),
+					NotificationActivity.class);
+					//i.putExtra("user_detail", notifications.get(position));
+					startActivity(i);			
+			
+			// Toast.makeText(getApplicationContext(),
+			// "Yet to design Contacts view", Toast.LENGTH_LONG).show();
+			//ft.replace(R.id.content_frame, nlf).commit();
+
 			// // create intent to perform web search for this planet
 			// Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
 			// intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
@@ -220,8 +242,8 @@ public class MainActivity extends FragmentActivity {
 							Toast.makeText(
 									getApplicationContext(),
 									upd.get_user_id() + " logged out "
-											+ d.truncate_db(), Toast.LENGTH_SHORT)
-									.show();
+											+ d.truncate_db(),
+									Toast.LENGTH_SHORT).show();
 							finish();
 						}
 					});
@@ -266,16 +288,65 @@ public class MainActivity extends FragmentActivity {
 			return;
 		}
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "click BACK again to exit", Toast.LENGTH_SHORT)
+		Toast.makeText(this, "click Back again to exit", Toast.LENGTH_SHORT)
 				.show();
 		new Handler().postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				doubleBackToExitPressedOnce = false;
-
 			}
 		}, 2000);
 	}
+	
+	
+	public void callAsynchronousTask() {
+	    TimerTask doAsynchronousTask;
+	    final Handler handler = new Handler();
+	    Timer timer = new Timer();
+         doAsynchronousTask = new TimerTask() {
+               @Override
+	                public void run() {
+	                   handler.post(new Runnable() {
+	                        public void run() {
+                         try {
+                       	  refresh performBackgroundTask = new refresh();
+                          performBackgroundTask.execute();
+	                           } catch (Exception e) { Log.e("Err in  timer async task", e.toString());
+	               		}
+	                        }
+	                    });
+	                }
+	            };
+
+	            timer.schedule(doAsynchronousTask, 0,120000);//execute in every 2 mins
+	}
+   
+	class refresh extends AsyncTask<String, String, String> {//background task getting json from online
+		
+	 protected void onPostExecute(String args)
+		{
+			try {
+				Log.d("Async task", "refresh Started");
+				contact_sync cs = new contact_sync(context);
+				System.out.println("affected row :"+ cs.sync_contact_db(getApplicationContext().getContentResolver()));			// update contact details
+				new friend_sync(context).sync_ol_sql();				//insert are update new contacts from online to local db 
+			
+				Log.d("Async task", "refresh finished");
+			//	return null;
+			} catch (Exception e) {
+				Log.e("Err in onPostexe async task", e.toString());
+			//	return null;
+			}
+				}
+		
+			//@override
+		protected String doInBackground(String... args) { //main activity for getting results
+		
+			return null;
+		}
+	}
+
 
 }
+
+

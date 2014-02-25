@@ -28,7 +28,7 @@ public DatabaseHandler(Context context) {
 		Log.d("creating: ", "tables..");
 		db.execSQL("CREATE TABLE user_pass ( user_id  TEXT PRIMARY KEY, passwd  TEXT)");
 		db.execSQL("CREATE TABLE user_detail ( user_id  TEXT PRIMARY KEY, user_name  TEXT, phone INTEGER, email_id TEXT, status TEXT, display_name TEXT)");
-		db.execSQL("CREATE TABLE friend_detail (user_id TEXT, friend_id TEXT, status TEXT)");
+		db.execSQL("CREATE TABLE friend_detail (friend_id TEXT PRIMARY KEY, status TEXT, visible TEXT, notify TEXT)");
 		db.execSQL("CREATE TABLE location_detail ( user_id  TEXT PRIMARY KEY, location TEXT, time  TEXT)");
 		Log.d("created: ", "tables..");
 			
@@ -90,10 +90,7 @@ public DatabaseHandler(Context context) {
 		//	return (int)db.insert("user_detail", null, values);	
 		values.put("display_name", upd.get_display_name());
 		return (int)db.insert("user_detail", null, values);
-		
 		}
-			
-		
 		// Inserting Row
 		catch(Exception e)
 		{
@@ -111,10 +108,11 @@ public DatabaseHandler(Context context) {
 		db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("user_id", upd.get_user_id()); 
 		values.put("friend_id", upd.get_friend_id()); 
 		values.put("status", upd.get_status());
-		
+		values.put("visible", upd.get_visible());
+		values.put("notify", upd.get_notify());
+
 		// Inserting Row
 		return (int)db.insert("friend_detail", null, values);
 		}
@@ -175,7 +173,7 @@ public DatabaseHandler(Context context) {
 		}
 		catch(Exception e)
 		{
-			Log.e("[Exception in Sqlite select_user_pass]", e.toString());
+			Log.e("[Exception in Sqlite checkout]", e.toString());
 			return null;
 		}
 		finally
@@ -247,7 +245,7 @@ public DatabaseHandler(Context context) {
 		}
 	}
 	
-	public List<user_detail_dao> select_all() {		//for user_detail table retrieve all data 
+	public List<user_detail_dao> select_all_user_detail() {		//for user_detail table retrieve all data 
 		try
 		{
 		user_detail_dao upd_nu ;
@@ -290,30 +288,34 @@ public DatabaseHandler(Context context) {
 		}
 	}
 	
-	public List<friend_detail_dao> select(friend_detail_dao upd) {		// for user_detail table
+	public List<friend_detail_dao> select_all_friend_detail() {		// for friend_detail table
 		try
 		{
-		friend_detail_dao upd_nu = new friend_detail_dao();
 		List<friend_detail_dao> contactList = new ArrayList<friend_detail_dao>();
-		
+		friend_detail_dao upd_nu;
 		db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from friend_detail where user_id='"+upd.get_user_id()+ "' AND friend_id='"+upd.get_friend_id()+"'", null);
+		Cursor cursor = db.rawQuery("select * from friend_detail", null);
 		if (!cursor.moveToFirst())
 					return null; 
-	      	
-		else	{
+	  else	{
 			if (cursor.moveToFirst()) {
 				System.out.println("Empty "+cursor.getCount());
+				int i=0;
 		   		do {
-					upd_nu.set_user_id(cursor.getString(0));
-					upd_nu.set_friend_id(cursor.getString(1));
-					upd_nu.set_status(cursor.getString(2));	// Adding contact to list
+		   			upd_nu = new friend_detail_dao();
+		   			upd_nu.set_friend_id(cursor.getString(0));
+					upd_nu.set_status(cursor.getString(1));	// Adding friends to list
+					upd_nu.set_visible(cursor.getString(2));	
+					upd_nu.set_notify(cursor.getString(3));	
+					
 					contactList.add(upd_nu);
+					Log.d(contactList.get(i).get_friend_id(),contactList.get(i).get_status());
+					i++;
 				} while (cursor.moveToNext());
 			}
 			else
 				return null;
-		
+			
 		return contactList;
 		}
 		}
@@ -328,6 +330,33 @@ public DatabaseHandler(Context context) {
 		}
 	}
 
+	public friend_detail_dao selectbyfrdid(friend_detail_dao upd) {		// for user_detail table
+		try
+		{
+		friend_detail_dao upd_nu = new friend_detail_dao();
+		db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select * from friend_detail where friend_id='"+upd.get_friend_id()+"'" ,null);
+		if (!cursor.moveToFirst())
+			return null;
+		else	{
+			upd_nu.set_friend_id(cursor.getString(0));
+			upd_nu.set_status(cursor.getString(1));	// Adding contact to list
+			upd_nu.set_visible(cursor.getString(2));
+			upd_nu.set_notify(cursor.getString(3));	
+			return upd_nu;
+			}
+		}
+		catch(Exception e)
+		{
+			Log.e("[Exception in Sqlite FRD id selectiont_frd_detail]", e.toString());
+			return null;
+		}
+		finally
+		{
+		//	db.close(); // Closing database connection
+		}
+	}
+		
 	public location_detail_dao select(location_detail_dao upd) {		// for location_detail table
 		try
 		{
@@ -384,10 +413,14 @@ public DatabaseHandler(Context context) {
 
 		ContentValues values = new ContentValues();
 		values.put("user_id", upd.get_user_id());
-		values.put("user_name", upd.get_user_name());
-		values.put("phone", upd.get_phone());
-		values.put("email_id", upd.get_email_id());
-		values.put("status", upd.get_status());
+		if(upd.get_user_name()!=null)
+			values.put("user_name", upd.get_user_name());
+		if(upd.get_phone()!=null)
+			values.put("phone", upd.get_phone());
+		if(upd.get_email_id()!=null)
+			values.put("email_id", upd.get_email_id());
+		if(upd.get_status()!=null)
+			values.put("status", upd.get_status());
 		
 		return db.update("user_detail", values, " user_id  = ?",
 				new String[] {upd.get_user_id() });
@@ -406,11 +439,16 @@ public DatabaseHandler(Context context) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put("user_id", upd.get_user_id());
 		values.put("friend_id", upd.get_friend_id());
-		values.put("status", upd.get_status());
-		return db.update("friend_detail", values, " user_id  = ? AND friend_id = ?",
-		new String[] {upd.get_user_id(), upd.get_friend_id() });
+		if(upd.get_status()!=null)
+			values.put("status", upd.get_status());
+		if(upd.get_visible()!=null)
+			values.put("visible", upd.get_visible());
+		if(upd.get_notify()!=null)
+			values.put("notify", upd.get_notify());
+			
+		return db.update("friend_detail", values, "friend_id = ?",
+		new String[] {upd.get_friend_id() });
 		}
 		catch(Exception e)		{
 			Log.e("[Exception in Sqlite updation_friend_detail]", e.toString());
@@ -425,9 +463,12 @@ public DatabaseHandler(Context context) {
 		try		{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
+		
 		values.put("user_id", upd.get_user_id());
-		values.put("location", upd.get_location());
-		values.put("time", upd.get_tyme());
+		if(upd.get_location()!=null)
+			values.put("location", upd.get_location());
+		if(upd.get_tyme()!=null)
+			values.put("time", upd.get_tyme());
 		return db.update("friend_detail", values, " user_id  = ?",
 		new String[] {upd.get_user_id() });
 			}
@@ -473,7 +514,10 @@ public int delete(user_detail_dao upd) {
 public int delete(friend_detail_dao upd) {
 	try		{			
 			SQLiteDatabase db = this.getWritableDatabase();
-			return db.delete("friend_detail", "user_id  = ? AND friend_id=?", new String[] { upd.get_user_id(),upd.get_friend_id() });
+			if(upd.get_visible()!=null)
+				return db.delete("friend_detail", "friend_id=? AND visibie=?", new String[] {upd.get_friend_id(),upd.get_visible() });
+			
+			return db.delete("friend_detail", "friend_id=?", new String[] {upd.get_friend_id() });
 			}
 			catch(Exception e)		{
 				Log.e("[Exception in Sqlite deletion_friend_detail]", e.toString());

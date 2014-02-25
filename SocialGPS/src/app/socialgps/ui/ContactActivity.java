@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.middleware.UserInfo;
+import app.socialgps.middleware.contact_manage;
 import android.widget.Toast;
 import app.socialgps.db.DatabaseHandler;
 import app.socialgps.db.dao.friend_detail_dao;
@@ -20,9 +21,10 @@ import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.friend_detail_dto;
 import app.socialgps.middleware.UserInfo;
 public class ContactActivity extends Activity {
-
+	
 	TextView name;
 	TextView number;
+	TextView emailid;
 	TextView status;
 	DatabaseHandler d;
 	Button addFriendButton;
@@ -42,28 +44,27 @@ public class ContactActivity extends Activity {
 
 		try {
 			Intent i = getIntent();
-			this.d=new DatabaseHandler(getApplicationContext());
-			this.upd= d.check_record();
-			this.frt= new  friend_detail_dto(upd);
-		
 			System.out.println("intent created");
 			user_detail_dao uio = (user_detail_dao) i.getSerializableExtra("user_detail");
 			System.out.println("obtained serialized object");
 
 			name = (TextView) findViewById(R.id.contactName);
 			number = (TextView) findViewById(R.id.contactNumber);
+			emailid= (TextView) findViewById(R.id.emailID);
 			status = (TextView) findViewById(R.id.contactStatus);
 			addFriendButton = (Button) findViewById(R.id.contactButton);
 			name.setText(uio.get_display_name());
 			number.setText(uio.get_user_id());
+			emailid.setText(uio.get_email_id());
 			this.frd_id= uio.get_user_id();
 			status.setText(uio.get_status());
+			final contact_manage cm= new contact_manage(frd_id, getApplicationContext());
 			
-			if(already_there().equals("nothing same"))
+			if(cm.already_there().equals("nothing same"))
 			{
-				//addFriendButton.animate();
+				addFriendButton.animate();
 			}
-			else
+			else if (cm.already_there().equals("pending") || cm.already_there().equals("accepted"))
 			{
 				addFriendButton.setVisibility(View.INVISIBLE);
 			}
@@ -73,54 +74,20 @@ public class ContactActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				if(send_req()==2)
+				if(cm.send_req()!=106)
 				{
 					Toast.makeText(getApplicationContext(),	"Request sent",	Toast.LENGTH_LONG).show();
+					addFriendButton.setVisibility(View.INVISIBLE);
 				}
 			}
 		});
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally { d.close(); }
+		} finally { }
 
 		
 	}
 
-	public String already_there()
-	{
-		try
-		{//String s = number.toString();
-		frd.set_user_id(upd.get_user_id());
-		frdlist= frt.select(frd);
-		if(frdlist!=null)
-		for(int t=0; t<frdlist.size();t++)
-		{
-			if(frdlist.get(t).get_friend_id().equals(this.frd_id))
-			{
-				Log.d("Friend details",frdlist.get(t).get_friend_id() );
-				return frdlist.get(t).get_status();  
-			}
-		}
-		Log.d("Friend details","Nothing same for "+this.frd_id );
-		}
-		catch(Exception e)
-		{
-			Log.d("Already there()", e.toString());
-		}
-		return  "nothing same";
-	}
-	
-	public int  send_req()
-	{
-		int t;
-		//String s = number.toString();
-		frd.set_user_id(upd.get_user_id());
-		frd.set_friend_id(this.frd_id);
-		frd.set_status("pending");
-		t=frt.insert(frd);
-		Log.d("Request status", String.valueOf(t));
-		return t;
-	}
 	
 	
 	// @Override
