@@ -69,32 +69,43 @@ public class friend_sync {
 		
 		frd= new friend_detail_dao(); 
 		frd.set_user_id(upd.get_user_id());
-		frd.set_status("blocked");
+//		frd.set_status("blocked");
 		olfrdlist= frt.selectbyfrdid(frd);
 		if(olfrdlist!=null)											//get all frds, who all are friend with me 
 			for(int i=0;i<olfrdlist.size();i++ )
 			{
 				frd= new friend_detail_dao(); 
 				if(olfrdlist.get(i).get_status().equals("blocked"))
-				{
-				frd.set_friend_id(olfrdlist.get(i).get_user_id());		//get user who frd wid you
-				frd.set_visible("false");
-				
-				if(d.selectbyfrdid(frd)==null)
-				{
-					d.insert(frd);
-					Log.d("Frd local block list added " +i, frd.get_friend_id()+ " "+ frd.get_status()+ " "+ frd.get_visible());
-				}
-				else
-				{
-					d.update(frd);
+					{
+					frd.set_friend_id(olfrdlist.get(i).get_user_id());		//get user who frd wid you
+					frd.set_visible("false");
+					
+					if(d.selectbyfrdid(frd)==null)
+					{
+						d.insert(frd);
+					}
+					else
+					{
+						d.update(frd);
+					}
 					Log.d("Frd local block list updated " +i, frd.get_friend_id()+ " "+ frd.get_status()+ " "+ frd.get_visible());
-				}
-		
-				}
+					}
+				else if(olfrdlist.get(i).get_status().equals("pending") || olfrdlist.get(i).get_status().equals("accepted"))    // for manage notofication frd req refresh
+					{
+					frd.set_friend_id(olfrdlist.get(i).get_user_id());		
+					frd.set_notify(olfrdlist.get(i).get_status());
+								
+					if(d.selectbyfrdid(frd)==null)
+					{
+						d.insert(frd);
+					}
+					else
+					{
+						d.update(frd);
+					}
+					Log.d("Frd local notify list added " +i, frd.get_friend_id()+ " "+ frd.get_status()+ " "+ frd.get_notify());
+					}
 			}
-		
-		
 		}
 		catch(Exception e) { Log.e("Sync ol sqllite frd list", e.toString());	}
 		finally { d.close(); }

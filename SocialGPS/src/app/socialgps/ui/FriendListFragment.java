@@ -67,8 +67,10 @@ public class FriendListFragment extends ListFragment {
 			if(friends!=null)
 			for(int i=0; i<friends.size();i++)						
 			{
-			//	Log.d(friends.get(i).get_friend_id(),friends.get(i).get_status());
-				if(friends.get(i).get_status().equals("accepted"))				//get only accepted contact
+
+
+				if(friends.get(i).get_status()!=null && friends.get(i).get_status().equals("accepted"))				//get only accepted contact
+
 				{
 					System.out.println("contacts selected");
 					udd= new user_detail_dao();
@@ -80,6 +82,8 @@ public class FriendListFragment extends ListFragment {
 					contacts.add(udd);
 					System.out.println("Display name "+udd.get_display_name());
 					}
+					if(udd!=null)
+						contacts.add(udd);
 				}
 			}
 			return contacts;

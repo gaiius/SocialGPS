@@ -51,7 +51,7 @@ public class contact_sync {
 			String s = convert_where(ans);
 			reuse = udt.select_all(s);
 			reuse = add_display_name(reuse, ans);
-			for (int i = 0; i < reuse.size(); i++) 				
+			for (int i = 0; i < reuse.size(); i++)
 				Log.d("Retrived contact", reuse.get(i).get_user_id());
 			return reuse;
 		} catch (Exception e) {
@@ -72,11 +72,13 @@ public class contact_sync {
 				for (int i = 0; i < ans.size(); i++) {
 					if (d.select(ans.get(i)) == null) {
 						k++;
-						//d.insert(ans.get(i));
-						Log.d("Contact_sync saved in loc_db "+d.insert(ans.get(i)), ans.get(i).get_display_name());
+						// d.insert(ans.get(i));
+						Log.d("Contact_sync saved in loc_db "
+								+ d.insert(ans.get(i)), ans.get(i)
+								.get_display_name());
 					}
 				}
-			
+
 			return k;
 		} catch (Exception e) {
 			Log.e("Exception 3 ", e.toString());
@@ -110,7 +112,7 @@ public class contact_sync {
 
 	public List readContacts(ContentResolver x) {
 		try {
-			ContentResolver cr = x;	// getContentResolver();
+			ContentResolver cr = x; // getContentResolver();
 
 			Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
 					null, null, null);
@@ -118,7 +120,7 @@ public class contact_sync {
 			ans = new ArrayList<user_detail_dao>();
 			if (cur.getCount() > 0) {
 				while (cur.moveToNext()) {
-					System.out.println("3");
+					// System.out.println("3");
 					String id = cur.getString(cur
 							.getColumnIndex(ContactsContract.Contacts._ID));
 					String name = cur
@@ -145,7 +147,7 @@ public class contact_sync {
 							udd.set_phone(Long.parseLong(phone));
 							udd.set_display_name(name);
 							if (phone.length() > 9) {
-								System.out.print("phone:"+ phone);
+								System.out.print("phone:" + phone);
 								ans.add(udd);
 							}
 
@@ -174,7 +176,7 @@ public class contact_sync {
 			}
 		}
 		if (buffer.length() > 10) {
-			//Log.d(buffer.toString(), buffer.substring(buffer.length() - 10));
+			// Log.d(buffer.toString(), buffer.substring(buffer.length() - 10));
 			return buffer.substring(buffer.length() - 10);
 		}
 
