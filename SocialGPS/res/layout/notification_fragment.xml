@@ -18,7 +18,8 @@
      <Button
          android:id="@+id/notification_accept_button"
          style="?android:attr/buttonStyleSmall"
-         
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="Accept" />
@@ -26,8 +27,8 @@
      <Button
          android:id="@+id/notification_deny_button"
          style="?android:attr/buttonStyleSmall"
-         
          android:layout_width="wrap_content"
+         
          android:layout_height="wrap_content"
          android:text="Deny" />
 

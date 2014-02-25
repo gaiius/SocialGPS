@@ -157,10 +157,13 @@ public class MainActivity extends FragmentActivity {
 		// Handle action buttons
 		switch (item.getItemId()) {
 		case R.id.action_settings:
+			System.out.println("mainactivity settings selected");
 			Intent i = new Intent(getApplicationContext(),
 					NotificationActivity.class);
-					//i.putExtra("user_detail", notifications.get(position));
-					startActivity(i);			
+			System.out.println("intent created");
+				//	i.putExtra("user_detail", notifications.get(position));
+					startActivity(i);	
+					System.out.println("notification activity started");
 			
 			// Toast.makeText(getApplicationContext(),
 			// "Yet to design Contacts view", Toast.LENGTH_LONG).show();

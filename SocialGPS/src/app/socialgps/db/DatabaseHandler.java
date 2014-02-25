@@ -299,7 +299,6 @@ public DatabaseHandler(Context context) {
 					return null; 
 	  else	{
 			if (cursor.moveToFirst()) {
-				System.out.println("Empty "+cursor.getCount());
 				int i=0;
 		   		do {
 		   			upd_nu = new friend_detail_dao();
@@ -307,10 +306,9 @@ public DatabaseHandler(Context context) {
 					upd_nu.set_status(cursor.getString(1));	// Adding friends to list
 					upd_nu.set_visible(cursor.getString(2));	
 					upd_nu.set_notify(cursor.getString(3));	
-					
 					contactList.add(upd_nu);
-					Log.d(contactList.get(i).get_friend_id(),contactList.get(i).get_status());
-					i++;
+//					Log.d(contactList.get(i).get_friend_id(),contactList.get(i).get_status());
+//					i++;
 				} while (cursor.moveToNext());
 			}
 			else
