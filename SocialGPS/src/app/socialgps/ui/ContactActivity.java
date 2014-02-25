@@ -50,7 +50,7 @@ public class ContactActivity extends Activity {
 
 			name = (TextView) findViewById(R.id.contactName);
 			number = (TextView) findViewById(R.id.contactNumber);
-			emailid= (TextView) findViewById(R.id.emailID);
+			emailid= (TextView) findViewById(R.id.frdname);
 			status = (TextView) findViewById(R.id.contactStatus);
 			addFriendButton = (Button) findViewById(R.id.contactButton);
 			name.setText(uio.get_display_name());

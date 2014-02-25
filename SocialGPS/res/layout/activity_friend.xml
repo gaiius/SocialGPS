@@ -17,7 +17,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/emailID"
+            android:id="@+id/frdname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Friend name"
@@ -60,6 +60,16 @@
             android:text="Location 1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/time1"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:paddingLeft="90dp"
+            android:text="time"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
@@ -79,6 +89,16 @@
             android:paddingLeft="0dp"
             android:text="Location 2"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/time2"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:paddingLeft="90dp"
+            android:text="time"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <View
             android:layout_width="wrap_content"
@@ -100,6 +120,16 @@
             android:text="Location 3"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/time3"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:paddingLeft="90dp"
+            android:text="time"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
@@ -119,6 +149,16 @@
             android:paddingLeft="0dp"
             android:text="Location 4"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/time4"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:paddingLeft="90dp"
+            android:text="time"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <View
             android:layout_width="wrap_content"
@@ -140,6 +180,16 @@
             android:text="Location 5"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <TextView
+            android:id="@+id/time5"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:gravity="right"
+            android:linksClickable="false"
+            android:paddingLeft="90dp"
+            android:text="time"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
@@ -150,6 +200,12 @@
             android:background="@android:color/darker_gray"
             android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show in map" />
 
     </LinearLayout>
 

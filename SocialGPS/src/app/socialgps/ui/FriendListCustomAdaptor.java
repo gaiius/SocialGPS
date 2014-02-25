@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +56,12 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 	public void onClick(View v) {
 		// TODO Auto-generated method stub					
 		int pos = (Integer)v.getTag();		 
-		Toast.makeText(v.getContext(), "Friend position is " + pos,
-	               Toast.LENGTH_SHORT).show();
-
+	
+		Intent i = new Intent(context, FriendActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		i.putExtra("user_detail", values.get(pos));
+		context.startActivity(i);
+	
 		
 	}
 

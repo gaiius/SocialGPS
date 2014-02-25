@@ -93,7 +93,7 @@
         android:padding="10dp" />
 
     <TextView
-        android:id="@+id/emailID"
+        android:id="@+id/frdname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dip"

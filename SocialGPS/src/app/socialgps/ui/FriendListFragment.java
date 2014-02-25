@@ -67,17 +67,21 @@ public class FriendListFragment extends ListFragment {
 			if(friends!=null)
 			for(int i=0; i<friends.size();i++)						
 			{
-				Log.d(friends.get(i).get_friend_id(),friends.get(i).get_status());
+			//	Log.d(friends.get(i).get_friend_id(),friends.get(i).get_status());
 				if(friends.get(i).get_status().equals("accepted"))				//get only accepted contact
 				{
+					System.out.println("contacts selected");
 					udd= new user_detail_dao();
 					udd.set_user_id(friends.get(i).get_friend_id());
 					udd= d.select(udd);											//get display name from user detail table
+					
+					if(udd!=null)												//phone contact delete but net contacts is stil there
+					{
 					contacts.add(udd);
-					Log.d("Display name",udd.get_display_name());
+					System.out.println("Display name "+udd.get_display_name());
+					}
 				}
 			}
-			System.out.println("contacts selected");
 			return contacts;
 		} catch (Exception e) {
 			Log.d("getlist frd exception",  e.toString());
