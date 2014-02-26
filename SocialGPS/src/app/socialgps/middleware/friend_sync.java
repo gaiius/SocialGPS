@@ -7,12 +7,14 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.db.DatabaseHandler;
 import app.socialgps.db.dao.friend_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.friend_detail_dto;
+import app.socialgps.db.dto.user_pass_dto;
 
 public class friend_sync {
 	
@@ -25,6 +27,9 @@ public class friend_sync {
 	user_detail_dao udd= new user_detail_dao();
 	friend_detail_dao frd; 
 	friend_detail_dto frt;
+	user_pass_dao upd1;
+	user_pass_dto upt;
+
 
 	public friend_sync(Context x)
 	{
@@ -41,6 +46,8 @@ public class friend_sync {
 	{
 		int l=0;
 		try	{
+		//update user password	
+		update_user_pass(); 
 		frd= new friend_detail_dao(); 
 		user_pass_dao upd= new user_pass_dao();;
 		d=new DatabaseHandler(this.c);
@@ -111,7 +118,21 @@ public class friend_sync {
 		finally { d.close(); }
 		return l;
 		}
+
+public boolean update_user_pass() {
+	try {
+	d=new DatabaseHandler(this.c);
+	upd1= d.check_record();
+	upt= new user_pass_dto();
+	upd1 = upt.select(upd1);
+	d.update(upd1);
+	System.out.println("Updated user_passed");
+	return true;
 	}
+	catch (Exception e) {	 return false;	}
+	finally { d.close(); }
+}
+}
 
 
 	

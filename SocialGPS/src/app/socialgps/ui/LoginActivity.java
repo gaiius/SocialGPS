@@ -76,7 +76,8 @@ public class LoginActivity extends Activity {
 								d.close(); }
 							else {
 								 d.insert(upd);
-								 d.close(); }
+								 d.close();
+								 }
 							//System.out.print("Test case" + t);
 							// continue next activity
 							Intent i = new Intent(getApplicationContext(),
@@ -87,7 +88,8 @@ public class LoginActivity extends Activity {
 							Toast.makeText(getApplicationContext(),
 									"Incorrect User name password Set",
 									Toast.LENGTH_LONG).show();
-					} else {
+				} 
+					else {
 						// continue next activity
 						Intent i = new Intent(getApplicationContext(),
 								MainActivity.class);
@@ -125,21 +127,22 @@ public class LoginActivity extends Activity {
 		
 		nu_upp=d.check_record();
 		if(nu_upp!=null)	{
-		upp = uppt.select(nu_upp);
-		if (uppt.get_status() == 3)	{ // check user_name
-			if (upp.get_passwd().equals(nu_upp.get_passwd()))	{
-				return true;	}
-			else {
-				return false;
-			}
+//		upp = uppt.select(nu_upp);
+//		if (uppt.get_status() == 3)	{ // check user_name
+//			if (upp.get_passwd().equals(nu_upp.get_passwd()))	{
+//				return true;	}
+//			else {
+//				return false;
+//			}
+		return true;
 		
 		} else {
 		Log.d("checking APP", "OUT");
 		return false;
 	}
-		}
-		else
-			return false;
+//		}
+//		else
+//			return false;
 		}
 
 		catch (Exception e) {
