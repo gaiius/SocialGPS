@@ -16,28 +16,15 @@
 
 package app.socialgps.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
-
 import app.socialgps.db.DatabaseHandler;
-import app.socialgps.db.JSONParser;
 import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.user_pass_dto;
-import app.socialgps.middleware.contact_sync;
-import app.socialgps.middleware.friend_sync;
 import app.socialgps.ui.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -57,7 +44,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
-	private DrawerLayout mDrawerLayout; // sample change comment
+	private DrawerLayout mDrawerLayout; 
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mDrawerTitle;
@@ -68,7 +55,8 @@ public class MainActivity extends FragmentActivity {
 	private String[] menuItems;
 	int newPosition = 0;
 	private boolean doubleBackToExitPressedOnce = false;
-	public Context context=this;
+	public Context context;
+	LocationServiceAsyncTask lsat;
  
    
 	
@@ -76,14 +64,46 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		d = new DatabaseHandler(this);
-		d.close();
-		try {
-			callAsynchronousTask();
-
-			 } catch (Exception e) {
-			Log.d("main activitiy on create()", e.toString());
-		}
+		context = getApplicationContext();
+		
+		//Location retrieving service execution
+		Log.d("LocationService", "call to service");
+		//try to reuse same object
+		lsat = new LocationServiceAsyncTask(context);
+		lsat.execute();
+		Log.d("Main activity", "continue after gps_details service call");
+//		Log.d("LocationService", "lsat called and proceed main activity");
+//		new Thread(new Runnable() { 
+//            public void run(){
+//            	
+//            	Calendar cal = Calendar.getInstance();
+//        		cal.add(Calendar.SECOND, 10);
+//        		Intent service = new Intent(context, LocationService.class);
+//        		PendingIntent pintent = PendingIntent
+//        				.getService(context, 0, service, 0);
+//
+//        		//Every 5 mins LocationService service will be called
+//        		AlarmManager alarm = (AlarmManager) context
+//        				.getSystemService(Context.ALARM_SERVICE);
+//        		// for 60 min 60*60*1000
+//        		alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+//        				5 * 60 * 1000, pintent);        		
+//        		startService(service);
+//        		Log.d("LocationService", "service started");
+//
+////            	LocationServiceAsyncTask lsat = new LocationServiceAsyncTask(context);
+////        		lsat.execute();
+//            }
+//    }).start();
+		
+//		d = new DatabaseHandler(this);
+//		d.close();
+//		try {
+//			//callAsynchronousTask();
+//
+//			 } catch (Exception e) {
+//			Log.d("main activitiy on create()", e.toString());
+//		}
 
 		mTitle = mDrawerTitle = getTitle();
 		menuItems = getResources().getStringArray(R.array.menu_items);
@@ -131,6 +151,13 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		Log.d("Main Activity", "onStart()");		
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
@@ -144,6 +171,7 @@ public class MainActivity extends FragmentActivity {
 		// view
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		menu.findItem(R.id.action_notifications).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -157,14 +185,27 @@ public class MainActivity extends FragmentActivity {
 		// Handle action buttons
 		switch (item.getItemId()) {
 		case R.id.action_settings:
+		{
 			System.out.println("mainactivity settings selected");
+			Intent i = new Intent(getApplicationContext(),
+					SettingsActivity.class);
+			System.out.println("intent created");
+				//	i.putExtra("user_detail", notifications.get(position));
+					startActivity(i);	
+					System.out.println("Settings activity started");
+					break;
+		}
+		case R.id.action_notifications:
+		{
+			System.out.println("mainactivity notifications selected");
 			Intent i = new Intent(getApplicationContext(),
 					NotificationActivity.class);
 			System.out.println("intent created");
 				//	i.putExtra("user_detail", notifications.get(position));
 					startActivity(i);	
 					System.out.println("notification activity started");
-			
+					break;
+		}
 			// Toast.makeText(getApplicationContext(),
 			// "Yet to design Contacts view", Toast.LENGTH_LONG).show();
 			//ft.replace(R.id.content_frame, nlf).commit();
@@ -183,6 +224,7 @@ public class MainActivity extends FragmentActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/* The click listner for ListView in the navigation drawer */
@@ -240,12 +282,9 @@ public class MainActivity extends FragmentActivity {
 			alertDialog.setPositiveButton("YES",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							upd = new user_pass_dao();
-							upd = d.check_record();
+							d= new DatabaseHandler(getApplicationContext());
 							Toast.makeText(
-									getApplicationContext(),
-									upd.get_user_id() + " logged out "
-											+ d.truncate_db(),
+									getApplicationContext()," logged out "+ d.truncate(),
 									Toast.LENGTH_SHORT).show();
 							finish();
 						}
@@ -291,7 +330,7 @@ public class MainActivity extends FragmentActivity {
 			return;
 		}
 		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, "click Back again to exit", Toast.LENGTH_SHORT)
+		Toast.makeText(this, "Press Back again to exit", Toast.LENGTH_SHORT)
 				.show();
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -301,55 +340,8 @@ public class MainActivity extends FragmentActivity {
 		}, 2000);
 	}
 	
+	//not used
 	
-	public void callAsynchronousTask() {
-	    TimerTask doAsynchronousTask;
-	    final Handler handler = new Handler();
-	    Timer timer = new Timer();
-         doAsynchronousTask = new TimerTask() {
-               @Override
-	                public void run() {
-	                   handler.post(new Runnable() {
-	                        public void run() {
-                         try {
-                       	  refresh performBackgroundTask = new refresh();
-                          performBackgroundTask.execute();
-	                           } catch (Exception e) { Log.e("Err in  timer async task", e.toString());
-	               		}
-	                        }
-	                    });
-	                }
-	            };
-
-	            timer.schedule(doAsynchronousTask, 0,120000);//execute in every 2 mins
-	}
-   
-	class refresh extends AsyncTask<String, String, String> {//background task getting json from online
-		
-	 protected void onPostExecute(String args)
-		{
-			try {
-				Log.d("Async task", "refresh Started");
-				contact_sync cs = new contact_sync(context);
-				System.out.println("affected row :"+ cs.sync_contact_db(getApplicationContext().getContentResolver()));			// update contact details
-				new friend_sync(context).sync_ol_sql();				//insert are update new contacts from online to local db 
-			
-				Log.d("Async task", "refresh finished");
-			//	return null;
-			} catch (Exception e) {
-				Log.e("Err in onPostexe async task", e.toString());
-			//	return null;
-			}
-				}
-		
-			//@override
-		protected String doInBackground(String... args) { //main activity for getting results
-		
-			return null;
-		}
-	}
-
-
 }
 
 

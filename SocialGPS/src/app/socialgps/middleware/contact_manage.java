@@ -48,24 +48,23 @@ public class contact_manage  {
 		this.d=new DatabaseHandler(this.c);
 		frd.set_user_id(upd.get_user_id());				//setting friend dao
 		frdlist= d.select_all_friend_detail();	
-	//	Log.d("friend details in loc db",String.valueOf(frdlist.size()));
-		System.out.print("1 Friend sync started");
+		Log.d("friend details in loc db",String.valueOf(frdlist.isEmpty()));
 		
 		if(frdlist!=null) {
 			s=check_db(frdlist);
 			System.out.print("1 Friend list not empty");
 		}
-		if(!s.equals("nothing same"))
+		if(s.equals("accepted") || s.equals("pending") )
 			return s;									//return current status
 		else
 		{
-			frdlist= frt.select(frd);					//checking in ol db
-			s=check_db(frdlist);
-		//	Log.d("online frd sync",String.valueOf(frdlist.size()));
-			if(s==null)
+//			frdlist= frt.select(frd);					//checking in ol db
+//			s=check_db(frdlist);
+//		//	Log.d("online frd sync",String.valueOf(frdlist.size()));
+//			if(s==null)
 				return "nothing same";
-			if(!s.equals("nothing same"))
-				return s;								//returns current status 
+//			if(s.equals("accepted") || s.equals("pending"))
+//				return s;								//returns current status 
 		}
 		}
 		catch(Exception e)

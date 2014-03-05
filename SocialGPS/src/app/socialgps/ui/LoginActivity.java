@@ -34,25 +34,25 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		try {
-			tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE); 
-			ph_no= tm.getLine1Number();
+			tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+			ph_no = tm.getLine1Number();
 			user_name = (EditText) findViewById(R.id.editText1);
 			user_name.setText(ph_no);
-			//user_name.setEnabled(false);
+			// user_name.setEnabled(false);
 			b1 = new Button(this);
 			b1 = (Button) findViewById(R.id.button);
 			t1 = new TextView(this);
 			t1 = (TextView) findViewById(R.id.textView5);
 			d = new DatabaseHandler(this);
-			if(init())		//checking db
+			if (init()) // checking db
 			{
-				Intent i = new Intent(getApplicationContext(), 	MainActivity.class); 	//redirecting to main page
+				Intent i = new Intent(getApplicationContext(),
+						MainActivity.class); // redirecting to main page
 				startActivity(i);
 				finish();
 				Log.d("already there", "forwarding");
-			}
-			else
-				Log.d("Nothing match","try again");
+			} else
+				Log.d("Nothing match", "try again");
 			Log.d("Event Started", "Button");
 		} catch (Exception e) {
 			Log.e("Exception", e.toString());
@@ -71,14 +71,14 @@ public class LoginActivity extends Activity {
 					upt = new user_pass_dto();
 					if (!local_check_now()) {
 						if (check_now()) {
-							if (update)	{
+							if (update) {
 								d.update(upd);
-								d.close(); }
-							else {
-								 d.insert(upd);
-								 d.close();
-								 }
-							//System.out.print("Test case" + t);
+								d.close();
+							} else {
+								d.insert(upd);
+								d.close();
+							}
+							// System.out.print("Test case" + t);
 							// continue next activity
 							Intent i = new Intent(getApplicationContext(),
 									MainActivity.class);
@@ -88,8 +88,7 @@ public class LoginActivity extends Activity {
 							Toast.makeText(getApplicationContext(),
 									"Incorrect User name password Set",
 									Toast.LENGTH_LONG).show();
-				} 
-					else {
+					} else {
 						// continue next activity
 						Intent i = new Intent(getApplicationContext(),
 								MainActivity.class);
@@ -118,38 +117,44 @@ public class LoginActivity extends Activity {
 			return true;
 		}
 	}
+
 	public boolean init()
+
 	{
-		try	{
-		user_pass_dao upp= new user_pass_dao(); 
-		user_pass_dao nu_upp= new user_pass_dao(); 
-		user_pass_dto uppt = new user_pass_dto();
-		
-		nu_upp=d.check_record();
-		if(nu_upp!=null)	{
-//		upp = uppt.select(nu_upp);
-//		if (uppt.get_status() == 3)	{ // check user_name
-//			if (upp.get_passwd().equals(nu_upp.get_passwd()))	{
-//				return true;	}
-//			else {
-//				return false;
-//			}
-		return true;
-		
-		} else {
-		Log.d("checking APP", "OUT");
-		return false;
-	}
-//		}
-//		else
-//			return false;
+		try {
+
+			user_pass_dao upp = new user_pass_dao();
+			user_pass_dao nu_upp = new user_pass_dao();
+			user_pass_dto uppt = new user_pass_dto();
+			nu_upp = d.check_record();
+			if (nu_upp != null) {
+				// upp = uppt.select(nu_upp);
+				// if (uppt.get_status() == 3) { // check user_name
+				// if (upp.get_passwd().equals(nu_upp.get_passwd())) {
+				// return true; }
+				// else {
+				// return false;
+				// }
+				return true;
+			} else {
+				Log.d("checking APP", "OUT");
+				return false;
+			}
+			// }
+			// else
+			// return false;
 		}
 
 		catch (Exception e) {
+
 			Log.e("Main", e.toString());
+
 			return true;
+
+		} finally {
+			d.close();
 		}
-		finally{ d.close(); }
+
 	}
 
 	public boolean check_empty() {
@@ -174,30 +179,34 @@ public class LoginActivity extends Activity {
 	}
 
 	public boolean local_check_now() {
-		try{
-		if (check_empty()) {
-			Log.d("Event Running", "checking local");
-			// System.out.println("inserting"+d.insert(upd));
-			upd = d.select(upd);
-			if (upd != null) {
-				if (upd.get_passwd().equals(passwd)) {
-					Log.d("checking local", "True");
-					return true;
+		try {
+			if (check_empty()) {
+				Log.d("Event Running", "checking local");
+				// System.out.println("inserting"+d.insert(upd));
+				upd = d.select(upd);
+				if (upd != null) {
+					if (upd.get_passwd().equals(passwd)) {
+						Log.d("checking local", "True");
+						return true;
+					} else {
+						update = true;
+						Log.d("checking local1", "Wrong password");
+						return false;
+					}
 				} else {
-					update = true;
-					Log.d("checking local1", "Wrong password");
+					Log.d("checking local2", "False");
 					return false;
 				}
 			} else {
-				Log.d("checking local2", "False");
+				Log.d("checking local", "no entry");
 				return false;
 			}
-		} else {
-			Log.d("checking local", "no entry");
+		} catch (Exception e) {
+			Log.d("login db", e.toString());
 			return false;
+		} finally {
+			d.close();
 		}
-		} catch(Exception e) { Log.d("login db", e.toString()); return false; }
-		finally{ d.close(); }
 	}
 
 	public boolean check_now() {
@@ -223,7 +232,7 @@ public class LoginActivity extends Activity {
 				return false;
 			}
 		} catch (Exception e) {
-		  //	Log.e("Main", e.toString());
+			// Log.e("Main", e.toString());
 			return false;
 		}
 	}

@@ -94,7 +94,7 @@ public class contact_sync {
 			for (int i = 0; i < without.size(); i++) {
 				System.out.print("i");
 				for (int j = 0; j < with.size(); j++) {
-					System.out.print("k");
+					//System.out.print("k");
 					if (without.get(i).get_user_id()
 							.equals(with.get(j).get_user_id())) {
 						without.get(i).set_display_name(
@@ -120,6 +120,7 @@ public class contact_sync {
 			ans = new ArrayList<user_detail_dao>();
 			if (cur.getCount() > 0) {
 				while (cur.moveToNext()) {
+					Thread.sleep(5);
 					// System.out.println("3");
 					String id = cur.getString(cur
 							.getColumnIndex(ContactsContract.Contacts._ID));
@@ -147,7 +148,7 @@ public class contact_sync {
 							udd.set_phone(Long.parseLong(phone));
 							udd.set_display_name(name);
 							if (phone.length() > 9) {
-								System.out.print("phone:" + phone);
+								//System.out.print("phone:" + phone);
 								ans.add(udd);
 							}
 

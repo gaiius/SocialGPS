@@ -21,7 +21,7 @@
          android:layout_height="wrap_content"
          android:gravity="right"         
          android:paddingRight="20dip"
-         android:text="Friends"
+         android:text=" "
          android:textColor="#0279ec"
          android:textSize="12sp" />
 

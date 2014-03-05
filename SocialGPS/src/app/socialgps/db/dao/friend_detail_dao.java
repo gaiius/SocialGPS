@@ -43,4 +43,9 @@ public class friend_detail_dao
 	{
 		return this.notify;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "user_id = " + user_id + " friend_id = " + friend_id + " status = " + status + " visible = " + visible + " notify = " + notify ;
+	}
 }

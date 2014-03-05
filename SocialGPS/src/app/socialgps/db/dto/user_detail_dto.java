@@ -48,7 +48,7 @@ public class user_detail_dto {
 	{
 		try
 		{
-			query="update user_detail set user_name='"+udo.get_user_name()+"',phone='"+udo.get_phone()+"',email_id='"+udo.get_email_id()+"',status='"+udo.get_status()+"' where user_id='"+udo.get_user_id()+"'";
+			query="update user_detail set user_name='"+udo.get_user_name()+"',email_id='"+udo.get_email_id()+"',status='"+udo.get_status()+"' where user_id='"+udo.get_user_id()+"'";
 			gj= new getJson(upd.get_user_id(),query); //aware in changing phone number also change phone no
 			return gj.get_res_code();
 		}
@@ -78,7 +78,7 @@ public class user_detail_dto {
 		{
 			query="select * from user_detail where "+c;
 			gj= new getJson(upd.get_user_id(),query);
-			return gj.get_user_detailss();
+			return gj.get_all_user_details();
 		}
 		catch(Exception e)
 		{

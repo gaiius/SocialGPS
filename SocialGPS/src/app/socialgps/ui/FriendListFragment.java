@@ -23,12 +23,14 @@ public class FriendListFragment extends ListFragment {
 	// In this class constructor we have to retrieve all matching contacts from
 	// server and assign it to a class object or list type
 
+	user_detail_dao udd;
+	DatabaseHandler d;
+	List<user_detail_dao> contacts = new ArrayList<user_detail_dao>(); // list
+																		// for
+																		// user
+																		// detail
+																		// table
 
-		user_detail_dao udd;
-	DatabaseHandler d;	
-	List<user_detail_dao> contacts= new ArrayList<user_detail_dao>();			// list for user detail table
-	
-	
 	// listener for contact click
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
@@ -48,47 +50,45 @@ public class FriendListFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+
 		contacts = get_list();
-		System.out.println("contacts obtained");
-		
+		System.out.println("friends obtained");
+
 		FriendListCustomAdaptor adapter = new FriendListCustomAdaptor(
 				getActivity().getApplicationContext(), contacts);
 		setListAdapter(adapter);
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
-	
+
 	public List<user_detail_dao> get_list() {
 		try {
 			d = new DatabaseHandler(getActivity().getApplicationContext());
 			System.out.println("record checked");
 			List<friend_detail_dao> friends = new ArrayList<friend_detail_dao>();
 			friends = d.select_all_friend_detail();
-			if(friends!=null)
-			for(int i=0; i<friends.size();i++)						
-			{
+			if (friends != null)
+				for (int i = 0; i < friends.size(); i++) {
 
+					// get only accepted contact
+					if (friends.get(i).get_status() != null
+							&& friends.get(i).get_status().equals("accepted"))
 
-				if(friends.get(i).get_status()!=null && friends.get(i).get_status().equals("accepted"))				//get only accepted contact
-
-				{
-					System.out.println("contacts selected");
-					udd= new user_detail_dao();
-					udd.set_user_id(friends.get(i).get_friend_id());
-					udd= d.select(udd);											//get display name from user detail table
-					
-					if(udd!=null)												//phone contact delete but net contacts is stil there
 					{
-					contacts.add(udd);
-					System.out.println("Display name "+udd.get_display_name());
+						System.out.println("contacts selected");
+						udd = new user_detail_dao();
+						udd.set_user_id(friends.get(i).get_friend_id());
+						// get display name from user detail table
+						udd = d.select(udd);
+						// phone contact delete but net contacts is still there
+						if (udd != null) {
+							contacts.add(udd);
+							System.out.println("Display name "+ udd.get_display_name());
+						}
 					}
-					if(udd!=null)
-						contacts.add(udd);
 				}
-			}
 			return contacts;
 		} catch (Exception e) {
-			Log.d("getlist frd exception",  e.toString());
+			Log.d("getlist frd exception", e.toString());
 			return null;
 		} finally {
 			d.close();

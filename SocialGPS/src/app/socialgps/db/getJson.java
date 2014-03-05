@@ -71,7 +71,7 @@ public class getJson { //JSON to DAO Conversation
 
 	}
 	
-	public List<user_detail_dao> get_user_detailss() //json to get collection of friend details dao
+	public List<user_detail_dao> get_all_user_details() //json to get collection of friend details dao
 	{
 		try
 		{
@@ -135,7 +135,7 @@ public class getJson { //JSON to DAO Conversation
 		}
 	}
 
-	public location_detail_dao get_location_detail_result() { //json to location detail dao 
+	public location_detail_dao get_location_detail_result() { //json to gps_details detail dao 
 		try {
 			if(get_res_code()==3)
 			{
@@ -144,7 +144,8 @@ public class getJson { //JSON to DAO Conversation
 					.getString("user_id"));
 			upd.set_location(products.getJSONArray("product").getJSONObject(0)
 					.getString("location"));
-			upd.set_tyme(products.getJSONArray("product").getJSONObject(0).getString("tyme"));
+			upd.set_tyme(products.getJSONArray("product").getJSONObject(0).getString("time"));
+			upd.set_status(products.getJSONArray("product").getJSONObject(0).getString("status"));
 			return upd;
 			}
 			else
@@ -154,7 +155,40 @@ public class getJson { //JSON to DAO Conversation
 			return null;
 		}
 	}
+	
+	public List<location_detail_dao> get_all_location_details() //json to get collection of friend details dao
+	{
+		try
+		{
+			if(get_res_code()==3)
+			{
+			
+	List<location_detail_dao> lfd = new ArrayList<location_detail_dao>();
 
+	for (int i=0;i<products.getJSONArray("product").length()-1;i++)
+	{
+		location_detail_dao upd = new location_detail_dao();
+		upd.set_user_id(products.getJSONArray("product").getJSONObject(i)
+				.getString("user_id"));
+		upd.set_location(products.getJSONArray("product").getJSONObject(i)
+				.getString("location"));
+		upd.set_tyme(products.getJSONArray("product").getJSONObject(i).getString("time"));
+		upd.set_status(products.getJSONArray("product").getJSONObject(i).getString("status"));
+		lfd.add(upd);
+	}
+	return lfd;
+			}
+			else
+				return null;
+		}
+	catch (JSONException e) {
+		Log.e("Error in getting JSON value", e.toString());
+		return null;
+	} catch (Exception e) {
+		System.out.println("Genral Error" + e.toString());
+		return null;
+	} 
+}	
 
 
 	public List<friend_detail_dao> get_friend_detail_result() //json to get collection of friend details dao
@@ -197,6 +231,7 @@ class return_Json extends AsyncTask<String, String, JSONObject> {//background ta
 	protected JSONObject doInBackground(String... args) { //main activity for getting results
 		try {
 			JSONObject json;
+			Log.e("Query", args[1]);
 			String url_all_products ="http://locobava.site90.net/main.php";
 			JSONParser jsonParser = new JSONParser();
 			List<NameValuePair> params = new ArrayList<NameValuePair>();

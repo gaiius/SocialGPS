@@ -29,7 +29,7 @@ public DatabaseHandler(Context context) {
 		db.execSQL("CREATE TABLE user_pass ( user_id  TEXT PRIMARY KEY, passwd  TEXT)");
 		db.execSQL("CREATE TABLE user_detail ( user_id  TEXT PRIMARY KEY, user_name  TEXT, phone INTEGER, email_id TEXT, status TEXT, display_name TEXT)");
 		db.execSQL("CREATE TABLE friend_detail (friend_id TEXT PRIMARY KEY, status TEXT, visible TEXT, notify TEXT)");
-		db.execSQL("CREATE TABLE location_detail ( user_id  TEXT PRIMARY KEY, location TEXT, time  TEXT)");
+		db.execSQL("CREATE TABLE location_detail ( user_id TEXT PRIMARY KEY, location TEXT, tyme  TEXT, status TEXT)");
 		Log.d("created: ", "tables..");
 			
 	}
@@ -133,8 +133,9 @@ public DatabaseHandler(Context context) {
 		ContentValues values = new ContentValues();
 		values.put("user_id", upd.get_user_id()); 
 		values.put("location", upd.get_location()); 
-		values.put("time", upd.get_tyme());  
-		
+		values.put("tyme", upd.get_tyme());  
+		values.put("status", upd.get_status());  
+			
 		// Inserting Row
 		return (int)db.insert("location_detail", null, values);
 		}
@@ -369,6 +370,7 @@ public DatabaseHandler(Context context) {
 		upd_nu.set_user_id(cursor.getString(0));
 		upd_nu.set_location(cursor.getString(1));
 		upd_nu.set_tyme(cursor.getString(2));
+		upd_nu.set_status(cursor.getString(3));
 		return upd_nu;
 		}		
 		}
@@ -382,7 +384,46 @@ public DatabaseHandler(Context context) {
 			//db.close(); // Closing database connection
 		}
 	}
-	
+	public List<location_detail_dao> select_all_location_detail() {		// for friend_detail table
+		try
+		{
+		List<location_detail_dao> contactList = new ArrayList<location_detail_dao>();
+		
+		db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("select * from location_detail", null);
+		if (!cursor.moveToFirst())
+					return null; 
+	  else	{
+			if (cursor.moveToFirst()) {
+				int i=0;
+		   		do {
+		   			location_detail_dao upd_nu = new location_detail_dao();
+		   			upd_nu.set_user_id(cursor.getString(0));
+		   			upd_nu.set_location(cursor.getString(1));
+		   			upd_nu.set_tyme(cursor.getString(2));
+		   			upd_nu.set_status(cursor.getString(3));
+		   			
+					contactList.add(upd_nu);
+//					Log.d(contactList.get(i).get_friend_id(),contactList.get(i).get_status());
+//					i++;
+				} while (cursor.moveToNext());
+			}
+			else
+				return null;
+			
+		return contactList;
+		}
+		}
+		catch(Exception e)
+		{
+			Log.e("[Exception in Sqlite selectiont_friend_detail]", e.toString());
+			return null;
+		}
+		finally
+		{
+		//	db.close(); // Closing database connection
+		}
+	}
 	
 	// Updating single contact
 	
@@ -435,7 +476,7 @@ public DatabaseHandler(Context context) {
 	public int update(friend_detail_dao upd) {
 		try		{
 		SQLiteDatabase db = this.getWritableDatabase();
-
+		 String s=null;
 		ContentValues values = new ContentValues();
 		values.put("friend_id", upd.get_friend_id());
 		if(upd.get_status()!=null)
@@ -444,7 +485,8 @@ public DatabaseHandler(Context context) {
 			values.put("visible", upd.get_visible());
 		if(upd.get_notify()!=null)
 			values.put("notify", upd.get_notify());
-			
+		
+		
 		return db.update("friend_detail", values, "friend_id = ?",
 		new String[] {upd.get_friend_id() });
 		}
@@ -466,9 +508,12 @@ public DatabaseHandler(Context context) {
 		if(upd.get_location()!=null)
 			values.put("location", upd.get_location());
 		if(upd.get_tyme()!=null)
-			values.put("time", upd.get_tyme());
-		return db.update("friend_detail", values, " user_id  = ?",
-		new String[] {upd.get_user_id() });
+			values.put("tyme", upd.get_tyme());
+		if(upd.get_status()!=null)
+			values.put("status", upd.get_status());
+		
+		return db.update("location_detail", values, "user_id = ?",
+		new String[] {upd.get_user_id()});
 			}
 		catch(Exception e)		{
 			Log.e("[Exception in Sqlite updation_location_detail]", e.toString());
@@ -540,7 +585,7 @@ public int delete(location_detail_dao upd) {
 			}
 	}
 
-public int truncate_db() {
+public int truncate() {
 	try		{			
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete("location_detail",null,null);
@@ -550,15 +595,11 @@ public int truncate_db() {
 		}
 		catch(Exception e)		{
 			Log.e("[Exception in Sqlite deletion_all]", e.toString());
-			return 0;
 		}
 		finally		{
 		//	db.close(); 
 		}
-}
-public void close_db()
-{
-	db.close();
+	return 0;
 }
 }
 

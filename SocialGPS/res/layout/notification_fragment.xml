@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:layout_height="60dip" >
+    android:paddingTop="5dp" >
 
-     <TextView
+    <TextView
         android:id="@+id/notification_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"       
+        android:layout_height="wrap_content"
         android:gravity="left"
-		android:paddingLeft="20dip"     
+        android:paddingLeft="20dip"
         android:text="Contact Name"
-        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#404040" >
     </TextView>
 
-     <Button
-         android:id="@+id/notification_accept_button"
-         style="?android:attr/buttonStyleSmall"
-         android:layout_marginLeft="10dp"
-         android:layout_marginRight="10dp"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Accept" />
+    <Button
+        android:id="@+id/notification_accept_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Accept" />
 
-     <Button
-         android:id="@+id/notification_deny_button"
-         style="?android:attr/buttonStyleSmall"
-         android:layout_width="wrap_content"
-         
-         android:layout_height="wrap_content"
-         android:text="Deny" />
+    <Button
+        android:id="@+id/notification_deny_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_name"
+        android:layout_toRightOf="@+id/notification_accept_button"
+        android:layout_marginTop="10dp"
+        android:text="Deny" />
 
-</LinearLayout> 
+</RelativeLayout>

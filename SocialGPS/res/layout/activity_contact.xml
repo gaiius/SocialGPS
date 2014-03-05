@@ -1,152 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".ContactActivity" >
 
-    <TextView
-        android:id="@+id/contactHeading"
+    <ScrollView
+        android:id="@+id/ScrlView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center"
-        android:text="Contact Details"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/contactNameLabel"
-        android:layout_width="130dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:gravity="left"
-        android:text="Name"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="5dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="5dip"
-        android:background="@android:color/darker_gray"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/contactName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="30dip"
-        android:paddingLeft="0dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/contactNumberLabel"
-        android:layout_width="130dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:gravity="left"
-        android:text="Number"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="5dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="5dip"
-        android:background="@android:color/darker_gray"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/contactNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="30dip"
-        android:paddingLeft="0dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/emailIdLabel"
-        android:layout_width="130dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:gravity="left"
-        android:text="E-mail ID"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="5dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:layout_marginTop="5dip"
-        android:background="@android:color/darker_gray"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/frdname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dip"
-        android:layout_marginLeft="30dip"
-        android:paddingLeft="0dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-  
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical" >
-   
-     <TextView
-        android:id="@+id/StatusLabel"
-        android:layout_width="130dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:gravity="left"
-        android:text="Status"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_margin="10dip"
-        android:background="@android:color/darker_gray" />
-        
-
-        <TextView
-            android:id="@+id/contactStatus"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="This is my status"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            tools:context=".ContactActivity" >
 
-      <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_margin="10dip"
-        android:background="@android:color/darker_gray" />
+            <TextView
+                android:id="@+id/contactHeading"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:text="Contact Details"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <TextView
+                android:id="@+id/contactNameLabel"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactHeading"
+                android:layout_marginLeft="20dip"
+                android:gravity="left"
+                android:text="Name"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <Button
-            android:id="@+id/contactButton"
-            android:layout_width="200dip"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dip"
-            android:gravity="center"
-            android:text="Add Friend" />
-    </LinearLayout>
+            <View
+                android:id="@+id/contactview1"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/contactNameLabel"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/contactName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactview1"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="30dip"
+                android:paddingLeft="0dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/contactNumberLabel"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactName"
+                android:layout_marginLeft="20dip"
+                android:gravity="left"
+                android:text="Number"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/contactview2"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/contactNumberLabel"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/contactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactview2"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="30dip"
+                android:paddingLeft="0dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/emailIdLabel"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactNumber"
+                android:layout_marginLeft="20dip"
+                android:gravity="left"
+                android:text="E-mail ID"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/contactview3"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/emailIdLabel"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/frdname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactview3"
+                android:layout_marginBottom="15dip"
+                android:layout_marginLeft="30dip"
+                android:paddingLeft="0dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/StatusLabel"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/frdname"
+                android:layout_marginLeft="20dip"
+                android:gravity="left"
+                android:text="Status"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <View
+                android:id="@+id/contactview4"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/StatusLabel"
+                android:layout_margin="10dip"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/contactStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactview4"
+                android:gravity="center"
+                android:text="This is my status"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <View
+                android:id="@+id/contactview5"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/contactStatus"
+                android:layout_margin="10dip"
+                android:background="@android:color/darker_gray" />
+
+            <Button
+                android:id="@+id/contactButton"
+                android:layout_width="200dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactview5"
+                android:layout_centerInParent="true"
+                android:layout_margin="15dip"
+                android:text="Add Friend" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

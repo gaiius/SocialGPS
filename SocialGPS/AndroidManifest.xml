@@ -12,7 +12,7 @@
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
-  limitations under the License.
+  limitations under the License.
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -88,8 +88,26 @@
             android:label="@string/title_activity_friend" >
         </activity>
         <activity
-            android:name="app.socialgps.ui.HomeActivity"
+            android:name="app.socialgps.ui.SettingsActivity"
             android:label="@string/title_activity_home" >
+        </activity>
+
+        <service
+            android:name="app.socialgps.ui.LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:process="app.socialgps.ui.LocationService.service" >
+        </service>
+        <service
+            android:name="app.socialgps.ui.GPSTracker"
+            android:enabled="true"
+            android:exported="false"
+            android:process="app.socialgps.ui.GPSTracker.service" >
+        </service>
+
+        <activity
+            android:name="app.socialgps.ui.FriendMapActivity"
+            android:label="@string/title_activity_friend_map" >
         </activity>
     </application>
 

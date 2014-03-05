@@ -67,7 +67,7 @@ public class ContactListFragment extends ListFragment {
 			System.out.println("record checked");
 			contacts = d.select_all_user_detail();
 			System.out.println("contacts selected");
-			//contacts= remove_mine(udd.get_user_id(), contacts);
+			contacts= remove_mine(udd.get_user_id(), contacts);
 			System.out.println("mine removed");
 		//	for (int i=0; i<contacts.size(); i++)
 		//		System.out.println("Frien siz " + contacts.size() + " "+ contacts.get(i).get_display_name()+" - " + contacts.get(i).get_phone().toString());

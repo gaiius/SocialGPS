@@ -2,7 +2,7 @@ package app.socialgps.db.dao;
 
 public class location_detail_dao
 {
-	private String user_id, location, tyme;
+	private String user_id, location, tyme, status;
 	public void set_user_id(String uid)
 	{
 		this.user_id=uid;
@@ -14,6 +14,10 @@ public class location_detail_dao
 	public void set_tyme(String tym)
 	{
 		this.tyme=tym;
+	}
+	public void set_status(String status)
+	{
+		this.status=status;
 	}
 	public String get_location()
 	{
@@ -27,4 +31,14 @@ public class location_detail_dao
 	{
 		return this.tyme;
 	}
+	public String get_status()
+	{
+		return this.status;
+	}
+	@Override
+	public String toString() {
+		return "location_detail_dao [user_id=" + user_id + ", location="
+				+ location + ", tyme=" + tyme + ", status=" + status + "]";
+	}	
+	
 }

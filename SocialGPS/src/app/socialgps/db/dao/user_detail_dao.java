@@ -18,6 +18,12 @@ public class user_detail_dao implements Serializable
 	{
 		this.email_id=eid;
 	}
+	@Override
+	public String toString() {
+		return "user_detail_dao [user_id=" + user_id + ", user_name="
+				+ user_name + ", email_id=" + email_id + ", status=" + status
+				+ ", dispaly_name=" + dispaly_name + ", phone=" + phone + "]";
+	}
 	public void set_status(String s)
 	{
 		this.status=s;
