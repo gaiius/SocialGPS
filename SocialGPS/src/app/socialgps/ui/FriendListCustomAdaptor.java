@@ -153,7 +153,7 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 			frd.set_friend_id(this.upd.get_user_id());	// user id
 			frd.set_status("blocked");		
 			this.fdt.insert(frd);								//insert into online DB	
-			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" Blocked",
+			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" is now visible in map",
 		               Toast.LENGTH_SHORT).show();
 		
 			Log.d("Online frd id blocked" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
@@ -180,7 +180,7 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 			frd.set_friend_id(this.upd.get_user_id());			// user id
 			frd.set_status("blocked");		
 			this.fdt.delete(frd);								//delete into online DB
-			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" Unblocked",
+			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" has been hidden from map",
 		               Toast.LENGTH_SHORT).show();
 			Log.d("Online frd id released" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
 		}

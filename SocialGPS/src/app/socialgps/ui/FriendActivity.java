@@ -3,6 +3,7 @@ package app.socialgps.ui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -56,7 +57,7 @@ public class FriendActivity extends Activity {
 			time[4] = (TextView) findViewById(R.id.time5);
 			showInMap = (Button) findViewById(R.id.showInMapButton);
 			showInMap.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
@@ -64,7 +65,7 @@ public class FriendActivity extends Activity {
 							FriendMapActivity.class);
 					i.putExtra("user_detail", l.get_location());
 					System.out.println("Friend activity intent created");
-						//	i.putExtra("user_detail", notifications.get(position));
+					// i.putExtra("user_detail", notifications.get(position));
 					startActivity(i);
 				}
 			});
@@ -83,35 +84,49 @@ public class FriendActivity extends Activity {
 					timelst = new ArrayList<String>();
 					templist = location_sync.stringtoloc(l.get_location());
 					timelst = location_sync.stringtotym(l.get_tyme());
-					Geocoder gc = new Geocoder(this);
+					Geocoder geocoder;
+					List<Address> addresses;
+					geocoder = new Geocoder(this, Locale.getDefault());
+					Log.d("Geocode", "templist size is  " + templist.size());
 					for (int j = 0; j < 5; j++) {
 
 						if (j < templist.size()) {
-							// try {
-							// List<Address> addresses
-							// =gc.getFromLocation(templist.get(j).getLat(),
-							// templist.get(j).getLng(), 1);
-							//
-							// if(addresses.size()>0 && addresses!=null)
-							// {
-							// loc[j].setText(addresses.get(0).getAddressLine(0)+", "+addresses.get(0).getCountryName());
-							// Address address = addresses.get(0);
-							// Log.d("getAddressLine(0) = " ,
-							// address.getAddressLine(0));
-							// Log.d("getAddressLine(1) = ",
-							// address.getAddressLine(1));
-							// Log.d("getAddressLine(2) = " ,
-							// address.getAddressLine(2));
-							//
-							// }
-							// else
-							loc[j].setText("Lat: " + templist.get(j).getLat()
-									+ ", Lon: " + templist.get(j).getLng());
-							time[j].setText(timelst.get(j));
-							// } catch (IOException e) {
-							// Log.e("Exception Location setting frd activity",
-							// e.toString());
-							// }
+
+							try {
+								Log.d("Geocode", templist.get(j).getLat() + " "
+										+ templist.get(j).getLng());
+								// System.out.println(templist.get(j));
+								addresses = geocoder.getFromLocation(templist
+										.get(j).getLat(), templist.get(j)
+										.getLng(), 1);
+								// addresses = geocoder.getFromLocation(47.656275, -122.303135, 1);
+								System.out.println(addresses);
+								String address = addresses.get(0)
+										.getAddressLine(0);
+								String city = addresses.get(0)
+										.getAddressLine(1);
+								String country = addresses.get(0)
+										.getAddressLine(2);
+								Log.d("Geocode", " " + address + " " + city
+										+ " " + country);
+
+								if (address != null) {
+									loc[j].setText(address);
+
+								} else {
+									loc[j].setText("Lat: "
+											+ templist.get(j).getLat()
+											+ ", Lon: "
+											+ templist.get(j).getLng());
+								}
+								
+								//if address is null time not assigned
+								time[j].setText(timelst.get(j));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								Log.e("GeoCode Exception", e.toString());
+							}
+							
 						} else {
 							loc[j].setText("Not Avail");
 							time[j].setText("...");

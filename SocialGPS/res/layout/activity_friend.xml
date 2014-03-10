@@ -10,208 +10,206 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".FriendActivity" >
 
-     <ScrollView
+    <ScrollView
         android:id="@+id/ScrlView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-    <LinearLayout
-    android:gravity="center|top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/frdname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Friend name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="20dip"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp" />
+            android:gravity="left|top"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/updated1"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:text="Last updated location"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/frdname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friend name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#0099cc" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="10dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/updated1"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="20dp"
+                android:text="Last seen  at"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
-            android:id="@+id/loc1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="Location 1"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/time1"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:gravity="right"
-            android:linksClickable="false"
-            android:paddingLeft="90dp"
-            android:text="time"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/loc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="Location 1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="40dip"
-            android:layout_marginRight="40dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/time1"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:paddingLeft="90dp"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#7fb2e5" />
 
-        <TextView
-            android:id="@+id/loc2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="Location 2"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/time2"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:gravity="right"
-            android:linksClickable="false"
-            android:paddingLeft="90dp"
-            android:text="time"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/loc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="Location 2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="40dip"
-            android:layout_marginRight="40dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/time2"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:paddingLeft="90dp"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#7fb2e5" />
 
-        <TextView
-            android:id="@+id/loc3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="Location 3"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/time3"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:gravity="right"
-            android:linksClickable="false"
-            android:paddingLeft="90dp"
-            android:text="time"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/loc3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="Location 3"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="40dip"
-            android:layout_marginRight="40dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/time3"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:paddingLeft="90dp"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#7fb2e5" />
 
-        <TextView
-            android:id="@+id/loc4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="Location 4"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/time4"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:gravity="right"
-            android:linksClickable="false"
-            android:paddingLeft="90dp"
-            android:text="time"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/loc4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="Location 4"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="40dip"
-            android:layout_marginRight="40dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/time4"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:paddingLeft="90dp"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#7fb2e5" />
 
-        <TextView
-            android:id="@+id/loc5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="0dp"
-            android:text="Location 5"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="5dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/time5"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:gravity="right"
-            android:linksClickable="false"
-            android:paddingLeft="90dp"
-            android:text="time"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/loc5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="Location 5"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="10dip"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/time5"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:gravity="right"
+                android:linksClickable="false"
+                android:paddingLeft="90dp"
+                android:text="time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#7fb2e5" />
 
-        <Button
-            android:id="@+id/showInMapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show in map" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="10dip"
+                android:background="@android:color/darker_gray"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/showInMapButton"
+                style="@style/ButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_btn"
+                android:layout_gravity="center"                
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Show in map" />
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

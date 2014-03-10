@@ -19,9 +19,10 @@
 
     <Button
         android:id="@+id/notification_accept_button"
-        style="?android:attr/buttonStyleSmall"
+        style="@style/ButtonText"
+        android:background="@drawable/blue_btn"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/notification_name"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -30,9 +31,10 @@
 
     <Button
         android:id="@+id/notification_deny_button"
-        style="?android:attr/buttonStyleSmall"
+        style="@style/ButtonText"
+        android:background="@drawable/blue_btn"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/notification_name"
         android:layout_toRightOf="@+id/notification_accept_button"
         android:layout_marginTop="10dp"

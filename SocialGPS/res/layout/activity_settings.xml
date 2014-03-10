@@ -80,7 +80,7 @@
                 android:layout_marginBottom="10dip"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dip"
-                android:text="Show to everyone" />
+                android:text="Visible to Everyone" />
 
             <TextView
                 android:id="@+id/namelabel"
@@ -121,13 +121,12 @@
                 android:id="@+id/editorsubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="90dp"
-                android:background="#0099cc"
-                android:gravity="center"
+                style="@style/ButtonText"
+                android:background="@drawable/blue_btn"
+                android:layout_gravity="center"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:text="Edit"
-                android:textColor="#c7d7db" />
+                android:text="Edit"/>
         </LinearLayout>
     </ScrollView>
 

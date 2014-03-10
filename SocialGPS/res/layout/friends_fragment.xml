@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:paddingTop="15dip"  
-    android:paddingBottom="15dip"
+    android:layout_height="60dip"
     android:gravity="center_vertical"
-    
-    android:layout_height="60dip" >
+    android:paddingBottom="15dip"
+    android:paddingTop="15dip" >
 
-     <TextView
+    <TextView
         android:id="@+id/friend_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"       
+        android:layout_height="wrap_content"
         android:gravity="left"
-		android:paddingLeft="20dip"     
+        android:paddingLeft="20dip"
         android:text="Contact Name"
-        android:textSize="22sp"
-        android:textColor="#404040" >
+        android:textColor="#404040"
+        android:textSize="22sp" >
     </TextView>
 
-     <Switch
-         android:id="@+id/friend_view_toggle"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-          android:layout_alignParentRight="true" 
-          android:paddingRight="20dip"/>
+    <Switch
+        android:id="@+id/friend_view_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dip"
+        android:layout_toRightOf="@+id/friend_name"
+        android:text="" />
 
-    
-
-</RelativeLayout> 
+</RelativeLayout>
