@@ -108,11 +108,12 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 			
 		 if(frd!=null)
 		 {
-			 if(frd.get_visible()!=null)	{
-				friendViewToggle.setChecked(true);//blocked 
-				System.out.println("Friend blocked"+ frd.get_visible());
+			 if(frd.get_visible()==null || frd.get_visible().equals("true"))	{
+				friendViewToggle.setChecked(false); // not blocked 
+				
 		 }else
-			 friendViewToggle.setChecked(false);
+			 friendViewToggle.setChecked(true); //blocked
+			 System.out.println("Friend blocked"+ frd.get_visible());
 		 }
 		 
 			friendViewToggle.setOnCheckedChangeListener(this);
@@ -129,6 +130,7 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		// TODO Auto-generated method stub
 		try {
 		int pos = (Integer)buttonView.getTag();
+		System.out.println("in block ");
 		
 		 d= new DatabaseHandler(this.context);
 		
@@ -141,19 +143,26 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 				{
 					d.insert(frd);						//local db insert 
 					Log.d("Frd local block list added " , frd.get_friend_id()+ " "+ frd.get_status());
+					frd=  new friend_detail_dao();						//for block list interchange user id and friend id and put block
+					frd.set_user_id(values.get(pos).get_user_id());		//current friend id
+					frd.set_friend_id(this.upd.get_user_id());	// user id
+					frd.set_status("blocked");		
+					this.fdt.insert(frd);			
 				}
+		
 			else
 				{
 					d.update(frd);					//local db update
 					Log.d("Frd local block list updated " , frd.get_friend_id()+ " "+ frd.get_status()+ " ");
+					frd=  new friend_detail_dao();						//for block list interchange user id and friend id and put block
+					frd.set_user_id(values.get(pos).get_user_id());		//current friend id
+					frd.set_friend_id(this.upd.get_user_id());	// user id
+					frd.set_status("blocked");		
+					this.fdt.update(frd);			
 				}
 			
-			frd=  new friend_detail_dao();						//for block list interchange user id and friend id and put block
-			frd.set_user_id(values.get(pos).get_user_id());		//current friend id
-			frd.set_friend_id(this.upd.get_user_id());	// user id
-			frd.set_status("blocked");		
-			this.fdt.insert(frd);								//insert into online DB	
-			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" is now visible in map",
+								//insert into online DB	
+			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" is Blocked, Now he can't see you",
 		               Toast.LENGTH_SHORT).show();
 		
 			Log.d("Online frd id blocked" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
@@ -178,9 +187,11 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 			frd=  new friend_detail_dao();						//for block list interchange user id and friend id and put block
 			frd.set_user_id(values.get(pos).get_user_id());		//current friend id
 			frd.set_friend_id(this.upd.get_user_id());			// user id
-			frd.set_status("blocked");		
-			this.fdt.delete(frd);								//delete into online DB
-			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+" has been hidden from map",
+			frd.set_status("accepted");		
+			Log.d("Frd online blocking list updated " , frd.get_friend_id()+ " "+ frd.get_status());
+			
+			this.fdt.update(frd);								//delete into online DB
+			Toast.makeText(buttonView.getContext(), values.get(pos).get_display_name()+"  is unblocked, Now he can see you",
 		               Toast.LENGTH_SHORT).show();
 			Log.d("Online frd id released" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
 		}

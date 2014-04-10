@@ -80,7 +80,7 @@
                 android:layout_marginBottom="10dip"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dip"
-                android:text="Visible to Everyone" />
+                android:text="I'm hiding" />
 
             <TextView
                 android:id="@+id/namelabel"

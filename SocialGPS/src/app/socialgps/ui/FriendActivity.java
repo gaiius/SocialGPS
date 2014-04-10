@@ -87,7 +87,6 @@ public class FriendActivity extends Activity {
 					Geocoder geocoder;
 					List<Address> addresses;
 					geocoder = new Geocoder(this, Locale.getDefault());
-					Log.d("Geocode", "templist size is  " + templist.size());
 					for (int j = 0; j < 5; j++) {
 
 						if (j < templist.size()) {
@@ -96,37 +95,32 @@ public class FriendActivity extends Activity {
 								Log.d("Geocode", templist.get(j).getLat() + " "
 										+ templist.get(j).getLng());
 								// System.out.println(templist.get(j));
+								System.out.println("addresses 1");
+								
 								addresses = geocoder.getFromLocation(templist
 										.get(j).getLat(), templist.get(j)
 										.getLng(), 1);
 								// addresses = geocoder.getFromLocation(47.656275, -122.303135, 1);
-								System.out.println(addresses);
-								String address = addresses.get(0)
-										.getAddressLine(0);
-								String city = addresses.get(0)
-										.getAddressLine(1);
-								String country = addresses.get(0)
-										.getAddressLine(2);
-								Log.d("Geocode", " " + address + " " + city
-										+ " " + country);
-
-								if (address != null) {
-									loc[j].setText(address);
-
-								} else {
-									loc[j].setText("Lat: "
-											+ templist.get(j).getLat()
-											+ ", Lon: "
-											+ templist.get(j).getLng());
-								}
+						System.out.println("addresses 2");
 								
+								if(addresses!=null)// && addresses.get(0)!=null)
+								{
+									System.out.println("addresses 3");
+									String address = addresses.get(0)
+											.getAddressLine(0);
+									loc[j].setText(address);
+								}
 								//if address is null time not assigned
-								time[j].setText(timelst.get(j));
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
+								loc[j].setText("Lat: "
+										+ templist.get(j).getLat()
+										+ ", Lon: "
+										+ templist.get(j).getLng());
+					
 								Log.e("GeoCode Exception", e.toString());
 							}
-							
+							time[j].setText(timelst.get(j));
 						} else {
 							loc[j].setText("Not Avail");
 							time[j].setText("...");

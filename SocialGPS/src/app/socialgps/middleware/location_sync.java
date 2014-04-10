@@ -26,7 +26,7 @@ public class location_sync {
 	List<gps_details> templist;
 	List<String> timelst;
 	List<location_detail_dao> lddlist;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd:mm:yyyy::HH:mm:ss");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd:MMM:yyyy hh:mm:ss a");
 	Context c;
 	location_detail_dao ldd;
 	location_detail_dto ldt;

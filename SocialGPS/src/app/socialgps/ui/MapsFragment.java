@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import app.socialgps.db.DatabaseHandler;
+import app.socialgps.db.dao.friend_detail_dao;
 import app.socialgps.db.dao.gps_details;
 import app.socialgps.db.dao.location_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
@@ -149,8 +150,15 @@ public class MapsFragment extends Fragment {
 			if (loclist != null) {
 				for (int i = 0; i < loclist.size(); i++) {
 					l = loclist.get(i);
-					if (l.get_status() == null || l.get_status() != "off") // privacy
+					System.out.println("map 1");
+	 				friend_detail_dao frd= new friend_detail_dao();
+					frd.set_user_id(l.get_user_id());
+					System.out.println("map 2 ");
+ 					frd= d.selectbyfrdid(frd);
+					System.out.println("map 3 ");
+ 					if (l.get_status() == null ||l.get_status() != "off" ) // privacy
 					{
+ 						System.out.println("map 4 ");
 						UserInfo ui = new UserInfo();
 						templist = new ArrayList<gps_details>();
 						timelst = new ArrayList<String>();

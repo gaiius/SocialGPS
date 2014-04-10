@@ -75,8 +75,8 @@ public class Registration extends Activity {
 					udt.insert(udd);
 					System.out.println("upd insert");
 					
-					d.insert(upd);							//storing in offline db
-					d.insert(udd);
+					//d.insert(upd);							//storing in offline db
+					//d.insert(udd);
 					Toast.makeText(getApplicationContext(), "User Registered, please continue by login", Toast.LENGTH_LONG).show();
 					d.close();
 					//Redirecting to Login Screen
@@ -131,6 +131,7 @@ public class Registration extends Activity {
 		s3=e3.getText().toString();
 		s4=e4.getText().toString();
 		s5=e5.getText().toString();
+		
 		String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
 		 
 		Pattern p = Pattern.compile(regEx);
@@ -175,7 +176,6 @@ public class Registration extends Activity {
 		else
 		{
 			Log.d("s1 s2 s3 s4 s5", s1+s2+s3+s4+s5);
-					
 			return true;
 		}
 			

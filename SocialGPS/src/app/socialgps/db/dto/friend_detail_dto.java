@@ -34,9 +34,11 @@ public class friend_detail_dto  {
 	{
 		try
 		{
+			System.out.println("Status : "+udo.get_status());
 			if(udo.get_status()!=null)
 				query="delete from friend_detail where user_id='"+udo.get_user_id()+"' and friend_id='"+udo.get_friend_id()+"' and status='"+udo.get_status()+"'";
-			query="delete from friend_detail where user_id='"+udo.get_user_id()+"' and friend_id='"+udo.get_friend_id()+"'";
+			else
+				query="delete from friend_detail where user_id='"+udo.get_user_id()+"' and friend_id='"+udo.get_friend_id()+"'";
 			gj= new getJson(upd.get_user_id(),query);
 			return gj.get_res_code();
 		}

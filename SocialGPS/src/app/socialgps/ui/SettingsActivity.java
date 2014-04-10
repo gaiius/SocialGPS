@@ -60,7 +60,7 @@ public class SettingsActivity extends Activity {
 				emailid.setText(udd.get_email_id());
 				status.setText(udd.get_status());
 
-				if (ldd.get_status() != null && !ldd.get_status().equals("off"))
+				if (ldd.get_status() != null || ldd.get_status().equals("off"))
 					privacy.setChecked(true);
 				else
 					privacy.setChecked(false);
