@@ -60,13 +60,13 @@ public class SettingsActivity extends Activity {
 				emailid.setText(udd.get_email_id());
 				status.setText(udd.get_status());
 
-				if (ldd.get_status() != null || ldd.get_status().equals("off"))
-					privacy.setChecked(true);
-				else
+				if (ldd.get_status() != null && ldd.get_status().equals("off"))
 					privacy.setChecked(false);
-				Log.d("detais",
+				else
+					privacy.setChecked(true);
+				System.out.println("detais"+
 						udd.get_user_name() + udd.get_status()
-								+ udd.get_email_id());
+								+ udd.get_email_id()+ ldd.get_status());
 			}
 
 			name.setEnabled(false);
@@ -124,9 +124,9 @@ public class SettingsActivity extends Activity {
 			ldd = new location_detail_dao();
 			ldd.set_user_id(upd.get_user_id());
 			if (privacy.isChecked())
-				ldd.set_status("off");
-			else
 				ldd.set_status("on");
+			else
+				ldd.set_status("off");
 
 			d.update(ldd);
 			ldt.update(ldd);

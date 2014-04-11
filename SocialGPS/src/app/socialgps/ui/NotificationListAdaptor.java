@@ -71,40 +71,58 @@ import app.socialgps.middleware.contact_manage;
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					//adding friend
-					frd= new friend_detail_dao(); 	
-					frd.set_friend_id(items.get(position).get_user_id());
-					frd.set_notify("accepted");
-					frd.set_status("accepted");
-				
-						d.update(frd);
-					
-					
+					acceptButton.setEnabled(false);
+					denyButton.setEnabled(false);
 					// making another user as frd
 					frd= new friend_detail_dao(); 	
 					frd.set_user_id(upd.get_user_id());
 					frd.set_friend_id(items.get(position).get_user_id());
 					frd.set_status("accepted");
 					cm= new contact_manage(items.get(position).get_user_id(),context);
-					if(cm.already_there().equals("pending")) //req recvd have to update
+					Log.d("already there", cm.already_there());
+					int t=0, t2=0;
+					friend_detail_dao frd1= new friend_detail_dao();
+					frd1.set_friend_id(items.get(position).get_user_id());
+					frd1= d.selectbyfrdid(frd1);
+					System.out.println(frd1.get_status());
+					
+					if(frd1.get_status()== null || !frd1.get_status().equals("pending")) //req recvd have to update
 					{
-						frt.update(frd);
+						t2=frt.insert(frd);
 					}
-					else
+					else if(t2!=105)
 					{
-						frt.insert(frd);
+						t2=frt.update(frd);
 					}
 					
 					System.out.println("user pass :"+upd.get_user_id());
 					frd.set_user_id(items.get(position).get_user_id());
 					frd.set_friend_id(upd.get_user_id());
 					frd.set_status("accepted");
-					frt.update(frd);
+					t=frt.update(frd);
 
+				if(t!=105 && t2!=105)
+				{
+					frd= new friend_detail_dao(); 	
+					frd.set_friend_id(items.get(position).get_user_id());
+					frd.set_notify("accepted");
+					frd.set_status("accepted");
+					d.update(frd);
+					acceptButton.setVisibility(View.INVISIBLE);
+					denyButton.setVisibility(View.INVISIBLE);
+					
 					System.out.println("onclick Exit");
 					Toast.makeText(context,
 							items.get(position).get_user_id()+" request accepted",
 							Toast.LENGTH_LONG).show();
 				}
+				else
+					Toast.makeText(context,
+							"Can't Make request, Try Again",
+							Toast.LENGTH_LONG).show();
+			
+				}
+				
 			});
 			
 			denyButton.setOnClickListener(new View.OnClickListener() {

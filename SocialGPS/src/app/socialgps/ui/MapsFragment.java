@@ -176,7 +176,7 @@ public class MapsFragment extends Fragment {
 							ui.setStatus(udd.get_status());
 							mapdetails.add(ui);
 							if (d.check_record().get_user_id()
-									.equals(udd.get_user_id())) // curren user
+									.equals(udd.get_user_id())) // current user
 								ll = area;
 							Log.d("MAP details", ui.toString());
 						}

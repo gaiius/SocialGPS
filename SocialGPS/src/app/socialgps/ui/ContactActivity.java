@@ -33,6 +33,7 @@ public class ContactActivity extends Activity {
 	List<friend_detail_dao> frdlist= new ArrayList<friend_detail_dao>();
 	user_pass_dao upd= new user_pass_dao();;
 	user_detail_dao udd= new user_detail_dao();
+	user_detail_dao uio;
 	friend_detail_dao frd= new friend_detail_dao(); 
 	friend_detail_dto frt;
 	
@@ -45,9 +46,9 @@ public class ContactActivity extends Activity {
 		try {
 			Intent i = getIntent();
 			System.out.println("intent created");
-			user_detail_dao uio = (user_detail_dao) i.getSerializableExtra("user_detail");
+			uio = (user_detail_dao) i.getSerializableExtra("user_detail");
 			System.out.println("obtained serialized object");
-
+			d= new DatabaseHandler( getApplicationContext());
 			name = (TextView) findViewById(R.id.contactName);
 			number = (TextView) findViewById(R.id.contactNumber);
 			emailid= (TextView) findViewById(R.id.frdname);
@@ -58,32 +59,116 @@ public class ContactActivity extends Activity {
 			emailid.setText(uio.get_email_id());
 			this.frd_id= uio.get_user_id();
 			status.setText(uio.get_status());
+			
+//			frd.set_friend_id(uio.get_user_id());
+//			frd= d.selectbyfrdid(frd);
+			System.out.println(frd);
+	
 			final contact_manage cm= new contact_manage(frd_id, getApplicationContext());
 			
 			if(cm.already_there().equals("nothing same"))
 			{
 				addFriendButton.animate();
 			}
-			else if (cm.already_there().equals("pending") || cm.already_there().equals("accepted"))
+			else if (cm.already_there().equals("pending"))
 			{
-				addFriendButton.setVisibility(View.INVISIBLE);
+				addFriendButton.setText("Delete Request");
 			}
-		
+			else if(cm.already_there().equals("accepted"))
+			{
+				addFriendButton.setText("Remove Friend");
+			}
+			
 		
 		addFriendButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if(cm.send_req()!=106)
+				addFriendButton.setEnabled(false);
+				upd= d.check_record();
+				frt= new friend_detail_dto(upd);
+				int t=0, t1=0; 
+				
+				if(addFriendButton.getText().equals("Add Friend"))
 				{
+					System.out.println("Add Friend");
+					
+					if(cm.send_req()!=105)
+					{
 					Toast.makeText(getApplicationContext(),	"Request sent",	Toast.LENGTH_LONG).show();
-					addFriendButton.setVisibility(View.INVISIBLE);
+					addFriendButton.setText("Delete Request");
+					}
+					else
+						Toast.makeText(getApplicationContext(), uio.get_user_id() + "Sorry,can't convience a server. Please try again later",
+								Toast.LENGTH_SHORT).show();
+				
 				}
+				else if(addFriendButton.getText().equals("Delete Request"))
+				{
+					frd= new friend_detail_dao(); 
+					System.out.println("In Remove Req");
+					
+					frd.set_user_id(upd.get_user_id());
+					frd.set_friend_id(frd_id);
+					frd.set_status("pending");
+					t= frt.delete(frd);
+				
+						if (t != 105) {
+							frd.set_friend_id(frd_id);
+							frd.set_status("null");
+							frd.set_notify("null");
+							d.update(frd);
+							System.out.println("onclick Exit");
+							addFriendButton.setText("Add Friend");
+							Toast.makeText(getApplicationContext(), uio.get_user_id() + " request canceled",
+									Toast.LENGTH_LONG).show();
+						}
+						else
+							Toast.makeText(getApplicationContext(), uio.get_user_id() + "Sorry,can't convience a server. Please try again later",
+									Toast.LENGTH_SHORT).show();
+					
+				}
+				else if(addFriendButton.getText().equals("Remove Friend"))
+				{
+				
+					frd= new friend_detail_dao(); 
+					System.out.println("In Remove frd");
+					
+					frd.set_user_id(frd_id);
+					frd.set_friend_id(upd.get_user_id());
+					t=frt.delete(frd);
+					System.out.println("1 "+frd);
+					
+					frd.set_user_id(upd.get_user_id());
+					frd.set_friend_id(frd_id);
+					t1=frt.delete(frd);
+					System.out.println("2 "+frd);
+						
+					if(t!=105 && t1!=105)
+					{
+					frd.set_friend_id(frd_id);
+					frd.set_status("null");
+					frd.set_notify("null");
+					d.update(frd);
+					addFriendButton.setText("Add Friend");
+					System.out.println("3 "+frd);
+					Toast.makeText(getApplicationContext(), uio.get_user_id() + " removed",
+							Toast.LENGTH_LONG).show();
+					}
+					else
+						Toast.makeText(getApplicationContext(), uio.get_user_id() + "Sorry,can't convience a server. Please try again later",
+								Toast.LENGTH_SHORT).show();
+				
+				}
+				addFriendButton.setEnabled(true);
+					
 			}
 		});
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally { }
+		}
+		finally {
+			d.close(); }
 
 		
 	}

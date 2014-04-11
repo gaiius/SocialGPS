@@ -48,7 +48,6 @@ public class contact_manage  {
 		this.d=new DatabaseHandler(this.c);
 		frd.set_user_id(upd.get_user_id());				//setting friend dao
 		frdlist= d.select_all_friend_detail();	
-		Log.d("friend details in loc db",String.valueOf(frdlist.isEmpty()));
 		
 		if(frdlist!=null) {
 			s=check_db(frdlist);
@@ -57,15 +56,8 @@ public class contact_manage  {
 		if(s.equals("accepted") || s.equals("pending") )
 			return s;									//return current status
 		else
-		{
-//			frdlist= frt.select(frd);					//checking in ol db
-//			s=check_db(frdlist);
-//		//	Log.d("online frd sync",String.valueOf(frdlist.size()));
-//			if(s==null)
-				return "nothing same";
-//			if(s.equals("accepted") || s.equals("pending"))
-//				return s;								//returns current status 
-		}
+			return "nothing same";
+
 		}
 		catch(Exception e)
 		{
@@ -81,17 +73,27 @@ public class contact_manage  {
 	{
 		try
 		{
-		int t;
+		int t=0;
 		//String s = number.toString();
 		this.d=new DatabaseHandler(this.c);
 		frd.set_user_id(upd.get_user_id());
 		frd.set_friend_id(this.frd_id);
 		frd.set_status("pending");
-		t= this.d.insert(frd);
-		frt.insert(frd);
+	
+		friend_detail_dao frd1= new friend_detail_dao();
+		frd1.set_friend_id(this.frd_id);
+		frd1= this.d.selectbyfrdid(frd1);
+		t=frt.insert(frd);
+		if(t!=105)
+			if(frd1==null)
+				t=this.d.insert(frd);
+			else
+				t=this.d.update(frd);
+		
 		Log.d("Request status", String.valueOf(t));
 		return t;
 		}
+		
 		catch(Exception e) { Log.d("send req func", e.toString()); return 106;	}
 		finally { d.close(); }
 	}
@@ -104,7 +106,7 @@ public class contact_manage  {
 			{
 				if(frdlist.get(t).get_friend_id().equals(this.frd_id))
 				{
-					Log.d("Friend details check db",frdlist.get(t).get_friend_id() );
+					Log.d("Friend details check db",frdlist.get(t).get_friend_id() +frdlist.get(t).get_status() );
 					return frdlist.get(t).get_status();  
 				}
 			}

@@ -14,13 +14,16 @@
         <RelativeLayout 
             android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/notification_list_view"
         android:layout_width="240dp"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"        
-        android:dividerHeight="2dp"/>
+        android:choiceMode="singleChoice"
+        android:dividerHeight="2dp" />
+
     </RelativeLayout>
 </ScrollView>
 </RelativeLayout>

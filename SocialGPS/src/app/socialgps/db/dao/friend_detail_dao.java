@@ -19,6 +19,27 @@ public class friend_detail_dao
 	{
 		this.visible=visible;
 	}
+	@Override
+	public int hashCode() {
+			return Integer.parseInt(friend_id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		friend_detail_dao other = (friend_detail_dao) obj;
+		if (friend_id == null) {
+			if (other.friend_id != null)
+				return false;
+		} else if (!friend_id.equals(other.friend_id))
+			return false;
+		return true;
+	}
+	
 	public void set_notify(String notify)
 	{
 		this.notify=notify;
