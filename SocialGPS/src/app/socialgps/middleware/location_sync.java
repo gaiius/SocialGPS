@@ -94,7 +94,7 @@ public class location_sync {
 					ldd.set_user_id(upd.get_user_id());
 					ldd.set_location(loctostring(templist));
 					ldd.set_tyme(tymtostring(timelst));
-					ldd.set_status("on");
+					ldd.set_status("off");
 	
 					ldt.insert(ldd);
 					Log.d("Location", " ol Record first copie inserted "
@@ -120,7 +120,7 @@ public class location_sync {
 
 				if (n <= 3) {
 					Log.d("Location " + n, "Size is less than limit");
-					if (dis > 200) {
+					if (dis > 1000) {
 						Log.d("Location", "Distance hi ");
 						templist.add(n + 1, gd);
 						// added to next location

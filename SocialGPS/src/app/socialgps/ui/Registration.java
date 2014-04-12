@@ -5,8 +5,11 @@ import java.util.regex.Pattern;
 
 import app.socialgps.ui.R;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -55,8 +58,9 @@ public class Registration extends Activity {
 		b1.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View view) {
-				if(local_check())
-				{					
+				if(testnet())
+					if(local_check())
+					{					
 					upd= new user_pass_dao();
 					
 					udd.set_user_id(s3);
@@ -187,5 +191,19 @@ public class Registration extends Activity {
 		return false;
 	}
 	}
-
+	 public boolean testnet(){
+	        ConnectivityManager connectivity = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+	          if (connectivity != null) 
+	          {
+	              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+	              if (info != null) 
+	                  for (int i = 0; i < info.length; i++) 
+	                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+	                      {
+	                          return true;
+	                      }
+	 
+	          }
+	          return false;
+	    }
 }

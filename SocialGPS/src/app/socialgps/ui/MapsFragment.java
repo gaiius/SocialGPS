@@ -152,12 +152,13 @@ public class MapsFragment extends Fragment {
 					l = loclist.get(i);
 					System.out.println("map 1");
 	 				friend_detail_dao frd= new friend_detail_dao();
-					frd.set_user_id(l.get_user_id());
+					frd.set_friend_id(l.get_user_id());
+					System.out.println(l.get_user_id()+" "+frd);
 					System.out.println("map 2 ");
  					frd= d.selectbyfrdid(frd);
+ 					System.out.println(frd +" "+ l);
 					System.out.println("map 3 ");
- 					if (l.get_status() == null ||l.get_status() != "off" ) // privacy
-					{
+					if (frd==null || ((l.get_status() == null || l.get_status().equals("off")) && (frd.get_status()!=null) && frd.get_status().equals("accepted") ))			{
  						System.out.println("map 4 ");
 						UserInfo ui = new UserInfo();
 						templist = new ArrayList<gps_details>();
@@ -186,7 +187,7 @@ public class MapsFragment extends Fragment {
 				return mapdetails;
 			}
 		} catch (Exception e) {
-			Log.d("Map fragment createdetails()", e.toString());
+			Log.e("Map fragment createdetails()", e.toString());
 			return null;
 		} finally {
 			d.close();

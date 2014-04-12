@@ -7,8 +7,11 @@ import java.util.Locale;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import app.socialgps.db.DatabaseHandler;
+import app.socialgps.db.dao.friend_detail_dao;
 import app.socialgps.db.dao.gps_details;
 import app.socialgps.db.dao.location_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
@@ -27,9 +31,10 @@ public class FriendActivity extends Activity {
 	TextView[] time = new TextView[5];
 	user_detail_dao udd = new user_detail_dao();
 	DatabaseHandler d;
+	friend_detail_dao frd = new friend_detail_dao();
 	List<gps_details> templist;
 	List<String> timelst;
-	Button showInMap;
+	Button showInMap, route;
 
 	location_detail_dao l;
 
@@ -55,6 +60,22 @@ public class FriendActivity extends Activity {
 			time[2] = (TextView) findViewById(R.id.time3);
 			time[3] = (TextView) findViewById(R.id.time4);
 			time[4] = (TextView) findViewById(R.id.time5);
+			
+			route=(Button) findViewById(R.id.routeButton);
+			route.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent i = new Intent(getApplicationContext(),
+							FriendMapActivity.class);
+					i.putExtra("user_detail", l.get_location());
+					i.putExtra("type", "route");
+					System.out.println("Friend activity intent created");
+					// i.putExtra("user_detail", notifications.get(position));
+					startActivity(i);
+				}});
+				
 			showInMap = (Button) findViewById(R.id.showInMapButton);
 			showInMap.setOnClickListener(new View.OnClickListener() {
 
@@ -64,6 +85,8 @@ public class FriendActivity extends Activity {
 					Intent i = new Intent(getApplicationContext(),
 							FriendMapActivity.class);
 					i.putExtra("user_detail", l.get_location());
+					i.putExtra("user_timing", l.get_tyme());
+					i.putExtra("type", "marker");
 					System.out.println("Friend activity intent created");
 					// i.putExtra("user_detail", notifications.get(position));
 					startActivity(i);
@@ -75,10 +98,14 @@ public class FriendActivity extends Activity {
 			d = new DatabaseHandler(this);
 			l = new location_detail_dao();
 			l.set_user_id(uio.get_user_id());
+			frd.set_friend_id(uio.get_user_id());
+			System.out.println(frd);
+			frd= d.selectbyfrdid(frd);
+			System.out.println("after :"+frd);
 			l = d.select(l);
-			if (l != null) {
-				Log.d("Friend info", l.toString());
-				if (l.get_status() == null || l.get_status() != "off") // privacy
+			if (l != null && frd!=null) {
+				Log.d("Friend info", l.toString()+ " " +frd.toString());
+				if ((l.get_status() == null || l.get_status().equals("off")) && (frd.get_status()!=null) && frd.get_status().equals("accepted") ) // privacy
 				{
 					templist = new ArrayList<gps_details>();
 					timelst = new ArrayList<String>();
@@ -125,8 +152,12 @@ public class FriendActivity extends Activity {
 							loc[j].setText("Not Avail");
 							time[j].setText("...");
 						}
-
 					}
+				}
+			else
+				for (int j = 0; j < 5; j++) {
+					loc[j].setText("Not Avail");
+					time[j].setText("...");
 				}
 			}
 		} catch (Exception e) {
@@ -135,6 +166,22 @@ public class FriendActivity extends Activity {
 			d.close();
 		}
 	}
+	
+	 public boolean testnet(){
+	        ConnectivityManager connectivity = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+	          if (connectivity != null) 
+	          {
+	              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+	              if (info != null) 
+	                  for (int i = 0; i < info.length; i++) 
+	                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+	                      {
+	                          return true;
+	                      }
+	 
+	          }
+	          return false;
+	    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

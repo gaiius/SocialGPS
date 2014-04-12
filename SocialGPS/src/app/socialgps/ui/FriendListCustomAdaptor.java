@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +50,7 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		this.upd= new user_pass_dao();
 		this.upd=d.check_record();
 		this.fdt= new friend_detail_dto(this.upd);
+	
 		}
 		 catch(Exception e) { Log.e("main friend adapter", e.toString());	}
 		finally { d.close(); }
@@ -95,6 +99,15 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		    }
 		 TextView friendName = (TextView) convertView.findViewById(R.id.friend_name);
 		 Switch friendViewToggle = (Switch) convertView.findViewById(R.id.friend_view_toggle);
+		 
+		 if(getCount()==1 && values.get(0).get_display_name().equals("Your contact is empty") )
+			{
+			 friendName.setText("    No Friends");
+				System.out.println("  Doing for empty");
+			//	notificationName.setTextSize(30);
+				friendViewToggle.setVisibility(View.GONE);
+				}
+		 
 		 friendName.setText(values.get(position).get_display_name());
 		 friendName.setTag(new Integer(position));
 		 friendViewToggle.setTag(new Integer(position));
@@ -124,7 +137,22 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		 
 		return convertView;
 	}
-
+	 public boolean testnet(){
+	        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	          if (connectivity != null) 
+	          {
+	              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+	              if (info != null) 
+	                  for (int i = 0; i < info.length; i++) 
+	                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+	                      {
+	                          return true;
+	                      }
+	 
+	          }
+	          return false;
+	    }
+	 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO Auto-generated method stub
@@ -133,9 +161,11 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		System.out.println("in block ");
 		
 		 d= new DatabaseHandler(this.context);
-		
+			
 		if(isChecked)									// if enable toggle button make friend block
 		{
+			if(testnet())
+			{
 			frd=  new friend_detail_dao();
 			frd.set_friend_id(values.get(pos).get_user_id());		//get user who frd wid you
 			frd.set_visible("false");
@@ -166,9 +196,21 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		               Toast.LENGTH_SHORT).show();
 		
 			Log.d("Online frd id blocked" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
+			}
+			else
+				{
+				Toast.makeText(buttonView.getContext(),
+						"No internet connection, Can't make your request",
+						Toast.LENGTH_LONG).show();
+				buttonView.setChecked(false);
+				}
+			
+			
 		}
 		else
 		{
+			if(testnet())
+			{
 			frd=  new friend_detail_dao();
 			frd.set_friend_id(values.get(pos).get_user_id());		//get user who frd wid you
 			frd.set_visible(null);
@@ -196,6 +238,14 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 			Log.d("Online frd id released" , frd.get_user_id()+" "+ frd.get_friend_id()+" "+ frd.get_status());
 		}
 		
+		else
+			{
+			Toast.makeText(buttonView.getContext(),
+					"No internet connection, Can't make your request",
+					Toast.LENGTH_LONG).show();
+			buttonView.setChecked(true);
+			}
+		}
 		
 		}catch(Exception e) { Log.e("onClick friend adapter", e.toString());	}
 		finally { d.close(); }

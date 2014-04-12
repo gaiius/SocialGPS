@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +38,7 @@ import app.socialgps.middleware.contact_manage;
 		DatabaseHandler d;
 		user_pass_dao upd;
 		contact_manage cm;
+		
 		public NotificationListAdaptor(Context context, int layoutResourceId, List<user_detail_dao>  items) {
 			super(context, layoutResourceId, items);
 			System.out.println("noti list adaptor constructor entered");
@@ -45,8 +49,25 @@ import app.socialgps.middleware.contact_manage;
 			upd= new user_pass_dao();;
 			upd= d.check_record();
 			this.frt= new  friend_detail_dto(upd);
+				
 			System.out.println("noti list adaptor constructor end");
 		}
+		
+		 public boolean testnet(){
+		        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		          if (connectivity != null) 
+		          {
+		              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+		              if (info != null) 
+		                  for (int i = 0; i < info.length; i++) 
+		                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+		                      {
+		                          return true;
+		                      }
+		 
+		          }
+		          return false;
+		    }
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
@@ -59,11 +80,22 @@ import app.socialgps.middleware.contact_manage;
 			System.out.println("inflating");
 			row = inflater.inflate(layoutResourceId, parent, false);
 			System.out.println("inflated");
-
+			
+			
 			notificationName = (TextView)row.findViewById(R.id.notification_name);
 			acceptButton = (Button)row.findViewById(R.id.notification_accept_button);
 			denyButton = (Button)row.findViewById(R.id.notification_deny_button);
 //			notificationName.setText("Hello hi");
+			if(getCount()==1 && items.get(0).get_display_name().equals("Your contact is empty") )
+			{
+				notificationName.setText("No new notification");
+				System.out.println("Doing for empty");
+			//	notificationName.setTextSize(30);
+			
+				acceptButton.setVisibility(View.GONE);
+				denyButton.setVisibility(View.GONE);
+				return row;
+			}
 			notificationName.setText(items.get(position).get_display_name());
 			acceptButton.setOnClickListener(new View.OnClickListener() {
 				
@@ -71,7 +103,8 @@ import app.socialgps.middleware.contact_manage;
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					//adding friend
-					acceptButton.setEnabled(false);
+					if(testnet())
+					{
 					denyButton.setEnabled(false);
 					// making another user as frd
 					frd= new friend_detail_dao(); 	
@@ -108,9 +141,6 @@ import app.socialgps.middleware.contact_manage;
 					frd.set_notify("accepted");
 					frd.set_status("accepted");
 					d.update(frd);
-					acceptButton.setVisibility(View.INVISIBLE);
-					denyButton.setVisibility(View.INVISIBLE);
-					
 					System.out.println("onclick Exit");
 					Toast.makeText(context,
 							items.get(position).get_user_id()+" request accepted",
@@ -122,7 +152,12 @@ import app.socialgps.middleware.contact_manage;
 							Toast.LENGTH_LONG).show();
 			
 				}
-				
+			
+				else
+					Toast.makeText(context,
+							"No internet connection, Can't make your request",
+							Toast.LENGTH_LONG).show();
+				}
 			});
 			
 			denyButton.setOnClickListener(new View.OnClickListener() {
@@ -130,24 +165,37 @@ import app.socialgps.middleware.contact_manage;
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-
+					int t=0;
+					if(testnet())
+					{
+					
+					frd.set_user_id(items.get(position).get_user_id());
+					frd.set_friend_id(upd.get_user_id());
+					frd.set_status("pending");
+					t=frt.delete(frd);
+					System.out.println("onclick Exit");
+					if(t!=105)
+					{
 					System.out.println("onclick entered");
 					frd= new friend_detail_dao(); 
 					frd.set_friend_id(items.get(position).get_user_id());
 					System.out.println("user pass :"+upd.get_user_id());
 					frd.set_notify("null");
 					d.update(frd);
-				
-					frd.set_user_id(items.get(position).get_user_id());
-					frd.set_friend_id(upd.get_user_id());
-					frd.set_status("pending");
-					frt.delete(frd);
-					System.out.println("onclick Exit");
-					
 					Toast.makeText(context,
 							items.get(position).get_user_id() + " request canceled",
 							Toast.LENGTH_LONG).show();
-				
+					}
+					else
+						Toast.makeText(context,
+								"Can't cancel the request, Try Again",
+								Toast.LENGTH_LONG).show();
+					}
+					
+					else
+						Toast.makeText(context,
+								"No internet connection, Can't make your request",
+								Toast.LENGTH_LONG).show();
 				}
 			});
 			

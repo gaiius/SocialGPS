@@ -23,14 +23,14 @@ public class FriendListFragment extends ListFragment {
 	// In this class constructor we have to retrieve all matching contacts from
 	// server and assign it to a class object or list type
 
-	user_detail_dao udd;
+	//user_detail_dao udd;
 	DatabaseHandler d;
 	List<user_detail_dao> contacts = new ArrayList<user_detail_dao>(); // list
 																		// for
 																		// user
 																		// detail
 																		// table
-
+	user_detail_dao udd= new user_detail_dao();
 	// listener for contact click
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
@@ -52,6 +52,13 @@ public class FriendListFragment extends ListFragment {
 			Bundle savedInstanceState) {
 
 		contacts = get_list();
+		if(contacts==null || contacts.size()<=0)
+		{
+		udd.set_display_name("Your contact is empty");
+		contacts = new ArrayList<user_detail_dao>(); 
+		contacts.add(udd);
+		System.out.println("in empty");
+		}
 		System.out.println("friends obtained");
 
 		FriendListCustomAdaptor adapter = new FriendListCustomAdaptor(
@@ -71,7 +78,7 @@ public class FriendListFragment extends ListFragment {
 
 					// get only accepted contact
 					if (friends.get(i).get_status() != null
-							&& friends.get(i).get_status().equals("accepted"))
+							&& (friends.get(i).get_status().equals("accepted") || friends.get(i).get_status().equals("blocked")))
 
 					{
 						System.out.println("contacts selected");

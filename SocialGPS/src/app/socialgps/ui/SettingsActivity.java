@@ -1,7 +1,11 @@
 package app.socialgps.ui;
 
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 import app.socialgps.db.DatabaseHandler;
 import app.socialgps.db.dao.location_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
@@ -27,6 +32,8 @@ public class SettingsActivity extends Activity {
 	location_detail_dao ldd;
 	user_detail_dto udt;
 	location_detail_dto ldt;
+	protected LocationManager locationManager;
+	boolean isNetworkEnabled = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +106,10 @@ public class SettingsActivity extends Activity {
 	}
 
 	public void event_invoked() {
+
+		if(testnet())
+		{
+		int t=0, t1=0;
 		if (b1.getText().equals("Edit")) {
 			b1.setText("Submit");
 			name.setEnabled(true);
@@ -118,9 +129,12 @@ public class SettingsActivity extends Activity {
 			udd.set_email_id(emailid.getText().toString());
 			udd.set_status(status.getText().toString());
 
+			
+			t=udt.update(udd);
+			if(t!=105)
+			{
 			d.update(udd);
-			udt.update(udd);
-
+			
 			ldd = new location_detail_dao();
 			ldd.set_user_id(upd.get_user_id());
 			if (privacy.isChecked())
@@ -128,12 +142,45 @@ public class SettingsActivity extends Activity {
 			else
 				ldd.set_status("off");
 
-			d.update(ldd);
-			ldt.update(ldd);
-
+			t=ldt.update(ldd);
+			if(t!=105)
+			{
+				d.update(ldd);
+				Toast.makeText(getApplicationContext(),
+						"Settings saved",
+						Toast.LENGTH_LONG).show();
+			}
+			else
+				Toast.makeText(getApplicationContext(),
+						"Can't Convience a server, Please try again",
+						Toast.LENGTH_LONG).show();
+		}
+			else
+				Toast.makeText(getApplicationContext(),
+						"Can't Convience a server, Please try again",
+						Toast.LENGTH_LONG).show();
 			b1.setEnabled(true);
 			b1.setText("Edit");
-
+		
 		}
 	}
+		else
+			Toast.makeText(getApplicationContext(),
+					"No internet connection, Can't make your request",
+					Toast.LENGTH_LONG).show();
+}
+	 public boolean testnet(){
+	        ConnectivityManager connectivity = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+	          if (connectivity != null) 
+	          {
+	              NetworkInfo[] info = connectivity.getAllNetworkInfo();
+	              if (info != null) 
+	                  for (int i = 0; i < info.length; i++) 
+	                      if (info[i].getState() == NetworkInfo.State.CONNECTED)
+	                      {
+	                          return true;
+	                      }
+	          }
+	          return false;
+	    }
 }

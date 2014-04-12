@@ -18,7 +18,7 @@ import app.socialgps.db.dao.user_pass_dao;
 public class NotificationActivity extends Activity {
 	Context context;
 	private ListView notificationList;
-	user_detail_dao udd;
+	user_detail_dao udd=new user_detail_dao();
 	DatabaseHandler d;
 	List<user_detail_dao> contacts = new ArrayList<user_detail_dao>(); // list
 																		// for
@@ -37,6 +37,14 @@ public class NotificationActivity extends Activity {
 		notificationList = (ListView) findViewById(R.id.notification_list_view);
 		// System.out.println("notification activity listview assigned");
 		contacts = get_list();
+		if(contacts==null || contacts.size()<=0)
+			{
+			udd.set_display_name("Your contact is empty");
+			contacts = new ArrayList<user_detail_dao>(); 
+			contacts.add(udd);
+			System.out.println("in empty");
+			}
+		
 		NotificationListAdaptor nla = new NotificationListAdaptor(
 				getApplicationContext(), R.layout.notification_fragment,
 				contacts);

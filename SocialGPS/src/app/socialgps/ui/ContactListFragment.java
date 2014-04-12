@@ -50,6 +50,14 @@ public class ContactListFragment extends ListFragment {
 	public void onResume() {
 	    super.onResume();  // Always call the superclass method first
 		contacts = get_list();
+		if(contacts==null ||  contacts.size()<=0)
+		{
+			user_detail_dao udd= new user_detail_dao();
+			udd.set_display_name("Your contact is empty");
+			contacts = new ArrayList<user_detail_dao>();
+			contacts.add(udd);
+		}
+			
 		System.out.println("contacts obtained");
 		ContactListArrayAdapter adapter = new ContactListArrayAdapter(
 				getActivity().getApplicationContext(), contacts); // pass the class object/list type instead of contactNames

@@ -39,7 +39,7 @@ public class LocationServiceAsyncTask extends AsyncTask<Void, Void, Void> {
 				.getSystemService(Context.ALARM_SERVICE);
 		// for 60 min 60*60*1000
 		alarm.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(),
-				5 * 60 * 1000, pintent);
+				2 * 60 * 1000, pintent);
 		Log.d("LocationService", "service start before");
 		context.startService(service); 
 		Log.d("LocationService", "service start after");

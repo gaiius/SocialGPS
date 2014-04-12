@@ -18,7 +18,7 @@ import app.socialgps.middleware.friend_sync;
 //sets the views in contact_fragment for each contact in a listview
 public class ContactListArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;// declare class object/list type here
-	private List<user_detail_dao> contacts;
+	private List<user_detail_dao> contacts= new ArrayList<user_detail_dao>();
 	// DatabaseHandler d;
 	friend_detail_dao fdd;
 	DatabaseHandler d;
@@ -39,11 +39,12 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			System.out.println("layout defined");
-
+			
 			View rowView = inflater.inflate(R.layout.contact_fragment, parent,
 					false);
 			System.out.println("view inflated");
-
+			
+			
 			TextView contactName = (TextView) rowView
 					.findViewById(R.id.contact_name);
 
@@ -52,6 +53,14 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
 			System.out.println("views created");
 			// get position in list and assign object and use it to set values
 			// set contactname
+			
+			if(getCount()==1 && contacts.get(0).get_display_name().equals("Your contact is empty") )
+			{
+				contactName.setText("Your contact list is empty");
+				friendStatus.setText("");
+				return rowView;
+			}
+			
 			contactName.setText(contacts.get(position).get_display_name());
 
 			System.out.println("name set");
@@ -87,7 +96,7 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
 				System.out.println("contact else executed");
 				friendStatus.setText("");
 			}
-
+			
 			return rowView;
 		} catch (Exception e) {
 			Log.d("Exception in getview contact array adapter", e.toString());

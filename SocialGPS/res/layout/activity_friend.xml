@@ -23,19 +23,32 @@
             android:gravity="left|top"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/frdname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Friend name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#0099cc" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/frdname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friend name"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#0099cc" />
+
+                <Button
+                    android:id="@+id/routeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="Route" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/updated1"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Last seen  at"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
