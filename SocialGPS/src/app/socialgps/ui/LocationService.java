@@ -69,9 +69,12 @@ public class LocationService extends Service {
 			frd.sync_ol_sql();			
 			//refresh location details
 			gps= new location_sync(this);
-			
-			gps.refresh();
-			gps.insert();
+			Log.d("Location","updation : "+gps.found);
+			if(gps.found)
+			{
+				gps.refresh();
+				gps.insert();
+			}
 			Log.d("LocationService", "LocationService contact refresh finished");
 		//	return null;
 			}

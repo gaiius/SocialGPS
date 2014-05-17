@@ -31,26 +31,29 @@ public class NotificationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// System.out.println("notification activity entered oncreate");
 		setContentView(R.layout.activity_notification_);
-		// System.out.println("notification activity contentviewset");
+//		 System.out.println("notification activity contentviewset");
 
-		// System.out.println("notification activity items added");
+//		 System.out.println("notification activity items added");
 		notificationList = (ListView) findViewById(R.id.notification_list_view);
-		// System.out.println("notification activity listview assigned");
+//		 System.out.println("notification activity listview assigned");
 		contacts = get_list();
+		System.out.println("checking empty");
 		if(contacts==null || contacts.size()<=0)
 			{
-			udd.set_display_name("Your contact is empty");
-			contacts = new ArrayList<user_detail_dao>(); 
-			contacts.add(udd);
+			user_detail_dao ud1=new user_detail_dao();
+			System.out.println("user detail obj");
+			ud1.set_display_name("Your contact is empty");
+		//	contacts = new ArrayList<user_detail_dao>(); 
+			contacts.add(ud1);
 			System.out.println("in empty");
 			}
-		
+		System.out.println("adapter calling");
 		NotificationListAdaptor nla = new NotificationListAdaptor(
 				getApplicationContext(), R.layout.notification_fragment,
 				contacts);
-		// System.out.println("adapter created");
+		 System.out.println("adapter created");
 		notificationList.setAdapter(nla);
-		// System.out.println("adapter set");
+		 System.out.println("adapter set");
 	}
 
 	@Override
@@ -61,7 +64,9 @@ public class NotificationActivity extends Activity {
 	}
 
 	public List<user_detail_dao> get_list() {
+		int l=0;
 		try {
+			
 			d = new DatabaseHandler(this);
 			System.out.println("record checked");
 			List<friend_detail_dao> friends = new ArrayList<friend_detail_dao>();
@@ -76,13 +81,14 @@ public class NotificationActivity extends Activity {
 						// get only pending contact
 						udd = new user_detail_dao();
 						udd.set_user_id(friends.get(i).get_friend_id());
+						System.out.println("preparig pending");
 						// get display name from user detail table
 						udd = d.select(udd);
 						if (udd != null)
-							contacts.add(udd);
+							contacts.add(udd); 
 					}
 				}
-			System.out.println("end of loop");
+			System.out.println("end of loop" +contacts.size());
 
 			return contacts;
 		} catch (Exception e) {

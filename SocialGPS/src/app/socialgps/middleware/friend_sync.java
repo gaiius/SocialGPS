@@ -13,6 +13,7 @@ import app.socialgps.db.dao.friend_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.db.dao.user_pass_dao;
 import app.socialgps.db.dto.friend_detail_dto;
+import app.socialgps.db.dto.user_detail_dto;
 import app.socialgps.db.dto.user_pass_dto;
 
 public class friend_sync {
@@ -43,17 +44,21 @@ public class friend_sync {
 
 		try {
 			d = new DatabaseHandler(this.c);
+			user_detail_dao udd1= new user_detail_dao();
 			user_pass_dao upd1 = new user_pass_dao();
 			upd1 = d.check_record();
-			user_pass_dto upt = new user_pass_dto();
-			upd1 = upt.select(upd1);
-			d.update(upd1);
-			System.out.println("Updated user_passed");
+			user_detail_dto udt = new user_detail_dto(upd1);
+			udd1.set_user_id(upd1.get_user_id());
+			udd1 = udt.select(udd1);
+			if(d.select(udd1)==null)
+				System.out.println(d.insert(udd1));
+		else
+				d.update(udd1);
+			System.out.println("Updated user_detail"+d.select(udd1));
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
-
 		finally {
 			d.close();
 		}

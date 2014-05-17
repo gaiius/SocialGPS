@@ -28,10 +28,16 @@ public class ContactListFragment extends ListFragment {
 	// listener for contact click
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		
 		Intent i = new Intent(getActivity().getApplicationContext(),
 				ContactActivity.class);
 		i.putExtra("user_detail", contacts.get(position));
-		startActivity(i);
+		System.out.println(position+" "+contacts.get(position).get_display_name());
+		if((!(position==contacts.size()-1))) 
+			startActivity(i);
+		else if(!(contacts.get(position).get_display_name().equals("Your contact is empty"))) 
+			startActivity(i);
+		
 	}
 
 	@Override
@@ -54,17 +60,24 @@ public class ContactListFragment extends ListFragment {
 		{
 			user_detail_dao udd= new user_detail_dao();
 			udd.set_display_name("Your contact is empty");
+			System.out.println("contact empty");
 			contacts = new ArrayList<user_detail_dao>();
 			contacts.add(udd);
-		}
 			
+		}
+		else
+		{
+			user_detail_dao udd= new user_detail_dao();
+			udd.set_display_name("                  Tap for more information");
+			contacts.add(udd);
+		}
 		System.out.println("contacts obtained");
 		ContactListArrayAdapter adapter = new ContactListArrayAdapter(
 				getActivity().getApplicationContext(), contacts); // pass the class object/list type instead of contactNames
 		System.out.println("contactlistadapter created");
 			setListAdapter(adapter);				
 			System.out.println("contactlistadapter set");
-	
+		
 	    
 	}
 	public List<user_detail_dao> get_list() {

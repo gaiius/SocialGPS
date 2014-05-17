@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.google.android.gms.location.LocationStatusCodes;
-
 import android.content.Context;
-import android.location.Location;
+import android.content.Intent;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.util.Log;
 import app.socialgps.db.DatabaseHandler;
 import app.socialgps.db.dao.friend_detail_dao;
@@ -16,9 +16,7 @@ import app.socialgps.db.dao.gps_details;
 import app.socialgps.db.dao.location_detail_dao;
 import app.socialgps.db.dao.user_detail_dao;
 import app.socialgps.db.dao.user_pass_dao;
-import app.socialgps.db.dto.friend_detail_dto;
 import app.socialgps.db.dto.location_detail_dto;
-import app.socialgps.db.dto.user_detail_dto;
 import app.socialgps.ui.GPSTracker;
 
 public class location_sync {
@@ -33,9 +31,11 @@ public class location_sync {
 	user_pass_dao upd;
 	gps_details gd;
 	int n;
+	public boolean found=false;
 	double lat;
 	double lon;
 	GPSTracker gps;
+	LocationManager locationManager;
 
 	public location_sync(Context c) {
 		try {
@@ -46,14 +46,64 @@ public class location_sync {
 			gps = new GPSTracker(c);
 			lat = gps.getLatitude();
 			lon = gps.getLongitude();
+			System.out.println("checking gps on are off");
+			if(lat==0.0 || lon==0.0)
+			{
+				turnGPSOn();
+				System.out.println("gps on and processing");
+				gps = new GPSTracker(c);
+				lat = gps.getLatitude();
+				lon = gps.getLongitude();
+				turnGPSOff();
+			}
+			if(lat==0.0 || lon==0.0)
+				{
+				found=false;
+				update();
+				}
+			else
+				found= true;
+					
 			this.c = c;
 		} catch (Exception e) {
 			Log.e("Exception Location sync construtor", e.toString());
 		} finally {
 			d.close();
 		}
-	}
+	}	
+	 private void turnGPSOn(){   
+	try{
+		 System.out.println("GPS turining on");
+		 String provider = android.provider.Settings.Secure.getString(this.c.getContentResolver(), 
+				 android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+		 
+		 if(!provider.contains("gps")){      
+		        final Intent poke = new Intent();
+		        poke.setClassName("com.android.settings","com.android.settings.widget.SettingsAppWidgetProvider");       
+		        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);   
+		        poke.setData(Uri.parse("3"));      
+		       this.c.sendBroadcast(poke);
+		       }
+		 }
+	catch(Exception e){Log.e("Location", "can't turn on "+e.toString());}
+	 }
+	 private void turnGPSOff(){   
+		 try
+		 {
+			 String provider = android.provider.Settings.Secure.getString(this.c.getContentResolver(), 
+		 
+				 android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+		 if(provider.contains("gps")){      
+		        final Intent poke = new Intent();  
+		        poke.setClassName("com.android.settings","com.android.settings.widget.SettingsAppWidgetProvider");           poke.addCategory(Intent.CATEGORY_ALTERNATIVE);   
+		        poke.setData(Uri.parse("3"));      
+		       this.c.sendBroadcast(poke);  
+		   }
+		 }catch(Exception e){Log.e("Location", "can't turn off");}
+		 }    
 
+	 
+	 
 	public location_detail_dao getMine() {
 		try {
 			ldd = new location_detail_dao();
@@ -65,6 +115,21 @@ public class location_sync {
 		}
 	}
 
+	public void update()
+	{
+		try	{
+		location_detail_dao ldo= new location_detail_dao();
+		ldo=getMine();
+		if(d.select(ldo)==null)
+			d.insert(ldo);
+		else
+			d.update(ldo);
+		}	 catch (Exception e) {
+				Log.e("Exception Location sync insert", e.toString());
+			} finally {
+				d.close();
+			}
+	}
 	public void insert() {
 		try {
 			d = new DatabaseHandler(this.c);
@@ -81,7 +146,7 @@ public class location_sync {
 					gd = new gps_details();
 					gd.setLat(lat);
 					gd.setLng(lon);
-					Log.d("Location", " Current location: " + gd);
+					Log.i("Location", " Current location: " + gd);
 					templist.add(gd);
 
 					timelst = new ArrayList<String>();
@@ -100,13 +165,13 @@ public class location_sync {
 					Log.d("Location", " ol Record first copie inserted "
 							+ loctostring(templist));
 					d.insert(ldd);
-					Log.d("Location", " loc Record first copie inserted  "
+					Log.i("Location", " loc Record first copie inserted  "
 							+ loctostring(templist));
 				} else
 					d.insert(ldd);
 
 			} else {
-				Log.d("Location", "IN Local DB ");
+				Log.i("Location", "IN Local DB ");
 				templist = new ArrayList<gps_details>();
 				templist = stringtoloc(ldd.get_location());
 				timelst = stringtotym(ldd.get_tyme());
@@ -116,10 +181,10 @@ public class location_sync {
 				gd = new gps_details();
 				gd.setLat(lat);
 				gd.setLng(lon);
-				Log.d("Location", "size" + n + " Current location:  " + gd);
+				Log.i("Location", "size" + n + " Current location:  " + gd);
 
 				if (n <= 3) {
-					Log.d("Location " + n, "Size is less than limit");
+					Log.i("Location " + n, "Size is less than limit");
 					if (dis > 1000) {
 						Log.d("Location", "Distance hi ");
 						templist.add(n + 1, gd);

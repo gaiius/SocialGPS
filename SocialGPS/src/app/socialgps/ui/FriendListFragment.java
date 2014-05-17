@@ -34,9 +34,9 @@ public class FriendListFragment extends ListFragment {
 	// listener for contact click
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Toast.makeText(getActivity().getApplicationContext(),
-				"FriendListItem onClickListener position " + position,
-				Toast.LENGTH_LONG).show();
+//		Toast.makeText(getActivity().getApplicationContext(),
+//				"FriendListItem onClickListener position " + position,
+//				Toast.LENGTH_LONG).show();
 		// Intent i = new Intent(getActivity().getApplicationContext(),
 		// ContactActivity.class);
 		// UserInfo uio = new UserInfo();
@@ -50,16 +50,24 @@ public class FriendListFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		contacts = get_list();
 		if(contacts==null || contacts.size()<=0)
 		{
-		udd.set_display_name("Your contact is empty");
+		System.out.println("in empty");
+		user_detail_dao ud1= new user_detail_dao();
+		ud1.set_display_name("Your contact is empty");
 		contacts = new ArrayList<user_detail_dao>(); 
-		contacts.add(udd);
+		contacts.add(ud1);
 		System.out.println("in empty");
 		}
-		System.out.println("friends obtained");
+		else
+		{
+			user_detail_dao ud1= new user_detail_dao();
+			ud1.set_display_name("Tap for more detail");
+			contacts.add(ud1);
+		}
+		System.out.println("friends obtained"+contacts);
 
 		FriendListCustomAdaptor adapter = new FriendListCustomAdaptor(
 				getActivity().getApplicationContext(), contacts);

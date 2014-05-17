@@ -124,6 +124,14 @@ public class MapsFragment extends Fragment {
 		Log.d("Map size", String.valueOf(userInfoList.size()));
 		while (itr.hasNext()) {
 			UserInfo uio = (UserInfo) itr.next();
+			if(ll==null && (ll.latitude==0.0 || ll.longitude==0.0) )
+			{
+				System.out.println("gps is turn on dialogue");
+				new GPSTracker(getActivity().getApplicationContext()).showSettingsAlert();
+				continue;
+			}
+			System.out.println("gps is turn on menu finished"+ll);
+			
 			MarkerOptions mo = new MarkerOptions()
 					.position(uio.getLaln())
 					.title(uio.getName())
@@ -133,7 +141,6 @@ public class MapsFragment extends Fragment {
 			Marker m = googleMap.addMarker(mo);
 			if (ll != null)
 				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ll, 15));
-
 			googleMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
 
 		}
@@ -179,7 +186,7 @@ public class MapsFragment extends Fragment {
 							if (d.check_record().get_user_id()
 									.equals(udd.get_user_id())) // current user
 								ll = area;
-							Log.d("MAP details", ui.toString());
+						//	Log.d("MAP details", ui.toString());
 						}
 					} else
 						return null;

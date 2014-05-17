@@ -268,7 +268,6 @@ public DatabaseHandler(Context context) {
 		   			upd_nu.set_email_id(cursor.getString(3));
 		   			upd_nu.set_status(cursor.getString(4));
 		   			upd_nu.set_display_name(cursor.getString(5));
-		   			Log.d("Select_all func()", upd_nu.get_display_name());
 		   			contactList.add(upd_nu);
 				} while (cursor.moveToNext());
 			}
@@ -280,7 +279,7 @@ public DatabaseHandler(Context context) {
 		}
 		catch(Exception e)
 		{
-			Log.e("[Exception in Sqlite selectiont_friend_detail]", e.toString());
+			Log.e("[Exception in Sqlite selection_all_user_detail]", e.toString());
 			return null;
 		}
 		finally

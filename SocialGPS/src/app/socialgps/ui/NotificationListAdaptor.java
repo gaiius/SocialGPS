@@ -41,6 +41,7 @@ import app.socialgps.middleware.contact_manage;
 		
 		public NotificationListAdaptor(Context context, int layoutResourceId, List<user_detail_dao>  items) {
 			super(context, layoutResourceId, items);
+			try{
 			System.out.println("noti list adaptor constructor entered");
 			this.layoutResourceId = layoutResourceId;
 			this.context = context;
@@ -49,8 +50,10 @@ import app.socialgps.middleware.contact_manage;
 			upd= new user_pass_dao();;
 			upd= d.check_record();
 			this.frt= new  friend_detail_dto(upd);
-				
 			System.out.println("noti list adaptor constructor end");
+			}
+			catch(Exception e){Log.d("notificationlistadapter conts exception", e.toString());
+			}
 		}
 		
 		 public boolean testnet(){
@@ -96,6 +99,7 @@ import app.socialgps.middleware.contact_manage;
 				denyButton.setVisibility(View.GONE);
 				return row;
 			}
+			System.out.println("button created");
 			notificationName.setText(items.get(position).get_display_name());
 			acceptButton.setOnClickListener(new View.OnClickListener() {
 				

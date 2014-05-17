@@ -109,6 +109,7 @@ public class FriendActivity extends Activity {
 				{
 					templist = new ArrayList<gps_details>();
 					timelst = new ArrayList<String>();
+					System.out.println("Accepted contact");
 					templist = location_sync.stringtoloc(l.get_location());
 					timelst = location_sync.stringtotym(l.get_tyme());
 					Geocoder geocoder;
@@ -134,7 +135,9 @@ public class FriendActivity extends Activity {
 								{
 									System.out.println("addresses 3");
 									String address = addresses.get(0)
-											.getAddressLine(0);
+											.getAddressLine(0)+", "+addresses.get(0)
+											.getAddressLine(1)+", "+addresses.get(0)
+											.getAddressLine(2);
 									loc[j].setText(address);
 								}
 								//if address is null time not assigned

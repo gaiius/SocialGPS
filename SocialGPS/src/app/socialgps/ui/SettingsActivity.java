@@ -51,14 +51,20 @@ public class SettingsActivity extends Activity {
 		ldt = new location_detail_dto(upd);
 
 		try {
+			System.out.println(upd);
+			
 			udd = new user_detail_dao();
 			udd.set_user_id(upd.get_user_id());
 			udd = d.select(udd);
-
+			System.out.println(udd);
+			
 			ldd = new location_detail_dao();
 			ldd.set_user_id(upd.get_user_id());
 			ldd = d.select(ldd);
-			Log.d("", "");
+			Log.d("settings", "getting data");
+			System.out.println(ldd);
+
+			
 			if (udd != null && ldd != null) {
 				System.out.println(ldd.get_status());
 

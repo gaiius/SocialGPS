@@ -58,7 +58,8 @@ public class GPSTracker extends Service implements LocationListener {
 			// getting network status
 			isNetworkEnabled = locationManager
 					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
+			Log.i("Location","GPS avail "+isGPSEnabled+" LBS : "+ isNetworkEnabled);
+			
 			if (!isGPSEnabled && !isNetworkEnabled) {
 				// no network provider is enabled
 			} else {
@@ -69,13 +70,14 @@ public class GPSTracker extends Service implements LocationListener {
 							LocationManager.NETWORK_PROVIDER,
 							MIN_TIME_BW_UPDATES,
 							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-					Log.d("Network", "Network");
+					Log.i("Location", "Network");
 					if (locationManager != null) {
 						location = locationManager
 								.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 						if (location != null) {
 							latitude = location.getLatitude();
 							longitude = location.getLongitude();
+							System.out.println("lat "+latitude+" long "+longitude);
 						}
 					}
 				}
@@ -86,13 +88,15 @@ public class GPSTracker extends Service implements LocationListener {
 								LocationManager.GPS_PROVIDER,
 								MIN_TIME_BW_UPDATES,
 								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-						Log.d("GPS Enabled", "GPS Enabled");
+						Log.d("Location", "GPS Enabled");
 						if (locationManager != null) {
 							location = locationManager
 									.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 							if (location != null) {
 								latitude = location.getLatitude();
 								longitude = location.getLongitude();
+								System.out.println("lat "+latitude+" long "+longitude);
+								
 							}
 						}
 					}

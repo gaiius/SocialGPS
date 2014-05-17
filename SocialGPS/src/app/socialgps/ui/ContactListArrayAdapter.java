@@ -34,13 +34,15 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		View rowView=null;
 		try {
 			System.out.println("getview first line");
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			System.out.println("layout defined");
+			this.d = new DatabaseHandler(this.context);
 			
-			View rowView = inflater.inflate(R.layout.contact_fragment, parent,
+			rowView = inflater.inflate(R.layout.contact_fragment, parent,
 					false);
 			System.out.println("view inflated");
 			
@@ -56,55 +58,62 @@ public class ContactListArrayAdapter extends ArrayAdapter<String> {
 			
 			if(getCount()==1 && contacts.get(0).get_display_name().equals("Your contact is empty") )
 			{
-				contactName.setText("Your contact list is empty");
+				System.out.println("process empty");
+				contactName.setEnabled(false);
+				contactName.setTextSize(15);
 				friendStatus.setText("");
 				return rowView;
 			}
-			
+			else {
 			contactName.setText(contacts.get(position).get_display_name());
-
+			
 			System.out.println("name set");
 			System.out.println("arrayadapterclass "
 					+ contacts.get(position).get_display_name());
 
-			this.d = new DatabaseHandler(this.context);
-			System.out.println("Contactlistarrayadapter DBhandler created ");
+//			System.out.println("Contactlistarrayadapter DBhandler created ");
 			fdd = new friend_detail_dao();
-			System.out.println("Contactlistarrayadapter fdd created ");
+//			System.out.println("Contactlistarrayadapter fdd created ");
 			fdd.set_friend_id(contacts.get(position).get_user_id());
-			System.out.println(fdd);
-			System.out.println("Contactlistarrayadapter friend id set ");
+//			System.out.println(fdd);
+//			System.out.println("Contactlistarrayadapter friend id set ");
 			fdd = this.d.selectbyfrdid(fdd);
-			System.out.println("Contactlistarrayadapter DBhandler assigned ");
-			System.out.println(fdd);
+//			System.out.println("Contactlistarrayadapter DBhandler assigned ");
+//			System.out.println(fdd);
 			if (fdd == null) {
 				friendStatus.setText("");
 				System.out.println("Contact FDD null ");
 			} else if (fdd.get_status() != null
 					&& fdd.get_status().equals("pending")) {
 				friendStatus.setText("Request sent");
-				System.out.println("Contact FDD pending ");
+//				System.out.println("Contact FDD pending ");
 			} else if (fdd.get_status() != null
 					&& fdd.get_status().equals("accepted")) {
 				friendStatus.setText("Friend");
-				System.out.println("Contact FDD accepted ");
+//				System.out.println("Contact FDD accepted ");
 			} else if (fdd.get_status() != null
 					&& fdd.get_status().equals("blocked")) {
 				friendStatus.setText(""); // not yet decided
-				System.out.println("Contact FDD Blocked ");
+//				System.out.println("Contact FDD Blocked ");
 			} else{
 				System.out.println("contact else executed");
 				friendStatus.setText("");
 			}
-			
+			if(contacts.get(position).get_display_name().equals("                  Tap for more information"))
+			{
+				contactName.setEnabled(false);
+				contactName.setTextSize(15);
+				friendStatus.setText("");
+			}
 			return rowView;
+			
+		}
 		} catch (Exception e) {
 			Log.d("Exception in getview contact array adapter", e.toString());
-			return null;
+			return rowView;
 		} finally {
 			d.close();
 		}
-
 	}
 
 	public int getCount() {

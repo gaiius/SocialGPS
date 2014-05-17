@@ -99,20 +99,22 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		    }
 		 TextView friendName = (TextView) convertView.findViewById(R.id.friend_name);
 		 Switch friendViewToggle = (Switch) convertView.findViewById(R.id.friend_view_toggle);
-		 
+		
 		 if(getCount()==1 && values.get(0).get_display_name().equals("Your contact is empty") )
 			{
-			 friendName.setText("    No Friends");
+			 friendName.setText("  Your friend list is empty");
 				System.out.println("  Doing for empty");
-			//	notificationName.setTextSize(30);
+				friendName.setTextSize(15);
+				friendName.setEnabled(false);
 				friendViewToggle.setVisibility(View.GONE);
-				}
-		 
+			}
+		  else
+		 {
 		 friendName.setText(values.get(position).get_display_name());
 		 friendName.setTag(new Integer(position));
 		 friendViewToggle.setTag(new Integer(position));
 		 friendName.setOnClickListener(this);	
-		 
+		 }
 		 frd= new friend_detail_dao();
 		 d= new DatabaseHandler(this.context);
 		 frd.set_friend_id(values.get(position).get_user_id());
@@ -130,7 +132,14 @@ public class FriendListCustomAdaptor extends BaseAdapter implements OnClickListe
 		 }
 		 
 			friendViewToggle.setOnCheckedChangeListener(this);
-		 
+			 if(values.get(position).get_display_name().equals("Tap for more detail") )
+			 {
+				 friendName.setText("     Switch button to invisible from your friend");
+				 friendName.setTextSize(15);
+				friendName.setEnabled(false);
+				friendViewToggle.setVisibility(View.GONE);
+			 }
+			  
 		 }
 		 catch(Exception e) { Log.e("getview friend adapter", e.toString());	}
 			finally { d.close(); }

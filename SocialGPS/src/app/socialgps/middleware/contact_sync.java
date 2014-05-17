@@ -25,14 +25,20 @@ public class contact_sync {
 	user_detail_dto udt;
 	user_pass_dao upd;
 	DatabaseHandler d;
+	Context c;
 	List<user_detail_dao> ans, reuse;
-
+	String my_number;
+	
 	public contact_sync(Context c) {
 		try {
+			this.c=c;
 			d = new DatabaseHandler(c);
+			String my_number= d.check_record().get_user_id();
 			udd = new user_detail_dao();
 			upd = new user_pass_dao();
 			upd = d.check_record();
+			my_number= upd.get_user_id();
+			
 			udt = new user_detail_dto(upd);
 		} catch (Exception e) {
 			Log.e("Exception main ", e.toString());
@@ -185,17 +191,25 @@ public class contact_sync {
 	}
 
 	public String convert_where(List<user_detail_dao> udd) {
-		System.out.println("way to enter");
-
+		try 
+		{
+		System.out.println("where block");
 		StringBuffer s = new StringBuffer();
 		for (int i = 0; i < udd.size(); i++) {
 			s.append("user_id='" + udd.get(i).get_user_id() + "'");
 
 			if (i != udd.size() - 1)
 				s.append(" OR ");
+			else
+				s.append(" OR '"+my_number +"'");
 		}
 		Log.d("Where", s.toString());
 		return s.toString();
+
+		} catch (Exception e) {
+			Log.e("Exception in where block ", e.toString());
+			return null;
+		}
 	}
 
 }
